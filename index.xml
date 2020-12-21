@@ -6,7 +6,18 @@
     <description>Recent content on ybs1164</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 21 Dec 2020 12:38:23 +0900</lastBuildDate><atom:link href="http://ybs1164.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 21 Dec 2020 23:51:10 +0900</lastBuildDate><atom:link href="http://ybs1164.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2075번 N번째 큰 수</title>
+      <link>http://ybs1164.github.io/ps/2075%EB%B2%88-n%EB%B2%88%EC%A7%B8-%ED%81%B0-%EC%88%98/</link>
+      <pubDate>Mon, 21 Dec 2020 23:51:10 +0900</pubDate>
+      
+      <guid>http://ybs1164.github.io/ps/2075%EB%B2%88-n%EB%B2%88%EC%A7%B8-%ED%81%B0-%EC%88%98/</guid>
+      <description>문제 https://www.acmicpc.net/problem/2075
+문제에서는 다음과 같은 NxN 크기의 2차원 배열이 주어진다.
+   - - - - -     12 7 9 15 5   13 8 11 19 6   21 10 26 31 16   48 14 28 35 25   52 20 32 41 49    특징이 하나 있다면, 모든 수는 자신의 위에 있는 수보다 크다는 것이다. 우리는 여기서 N번째로 큰 수를 구하면 된다.</description>
+    </item>
+    
     <item>
       <title>11054번 가장 긴 바이토닉 부분 수열</title>
       <link>http://ybs1164.github.io/ps/11054%EB%B2%88-%EA%B0%80%EC%9E%A5-%EA%B8%B4-%EB%B0%94%EC%9D%B4%ED%86%A0%EB%8B%89-%EB%B6%80%EB%B6%84-%EC%88%98%EC%97%B4/</link>
