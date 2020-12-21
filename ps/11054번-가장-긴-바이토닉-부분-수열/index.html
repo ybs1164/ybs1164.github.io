@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Language" content="en">
+
+    <meta name="author" content="ybs1164">
+    <meta name="description" content="일단 C&#43;&#43; 이 내 주 언어니까 vsc 에 C/C&#43;&#43; 환경을 따로 마련을 해야 할텐데.. 이쪽 관련 내옹은 dev 카테고리에 따로 적는걸로 하겠다. 분량이 생각보다 많아질 것 같다.
+오늘은 시간이 그리 많지 않으니, 라즈비안을 깔 때 기본적으로 제공해주는 Geany 라는 ide 를 이용해보겠다. 기가 지니 아니다. 아직 자세하게는 모르지만, 이걸로도 충분할 것 같다.
+ 문제 https://www.acmicpc.net/problem/11054
+문제를 요약하자면 다음과 같다. 수열이 주어지면 오름차순으로 한 번, 내림차순으로 한 번 훑었을 때 최장 수열 길이를 구하시오.">
+    <meta name="keywords" content="blog">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="11054번 가장 긴 바이토닉 부분 수열"/>
+<meta name="twitter:description" content="일단 C&#43;&#43; 이 내 주 언어니까 vsc 에 C/C&#43;&#43; 환경을 따로 마련을 해야 할텐데.. 이쪽 관련 내옹은 dev 카테고리에 따로 적는걸로 하겠다. 분량이 생각보다 많아질 것 같다.
+오늘은 시간이 그리 많지 않으니, 라즈비안을 깔 때 기본적으로 제공해주는 Geany 라는 ide 를 이용해보겠다. 기가 지니 아니다. 아직 자세하게는 모르지만, 이걸로도 충분할 것 같다.
+ 문제 https://www.acmicpc.net/problem/11054
+문제를 요약하자면 다음과 같다. 수열이 주어지면 오름차순으로 한 번, 내림차순으로 한 번 훑었을 때 최장 수열 길이를 구하시오."/>
+
+    <meta property="og:title" content="11054번 가장 긴 바이토닉 부분 수열" />
+<meta property="og:description" content="일단 C&#43;&#43; 이 내 주 언어니까 vsc 에 C/C&#43;&#43; 환경을 따로 마련을 해야 할텐데.. 이쪽 관련 내옹은 dev 카테고리에 따로 적는걸로 하겠다. 분량이 생각보다 많아질 것 같다.
+오늘은 시간이 그리 많지 않으니, 라즈비안을 깔 때 기본적으로 제공해주는 Geany 라는 ide 를 이용해보겠다. 기가 지니 아니다. 아직 자세하게는 모르지만, 이걸로도 충분할 것 같다.
+ 문제 https://www.acmicpc.net/problem/11054
+문제를 요약하자면 다음과 같다. 수열이 주어지면 오름차순으로 한 번, 내림차순으로 한 번 훑었을 때 최장 수열 길이를 구하시오." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://ybs1164.github.io/ps/11054%EB%B2%88-%EA%B0%80%EC%9E%A5-%EA%B8%B4-%EB%B0%94%EC%9D%B4%ED%86%A0%EB%8B%89-%EB%B6%80%EB%B6%84-%EC%88%98%EC%97%B4/" />
+<meta property="article:published_time" content="2020-12-21T12:38:23+09:00" />
+<meta property="article:modified_time" content="2020-12-21T12:38:23+09:00" />
+
+
+    <title>
+  11054번 가장 긴 바이토닉 부분 수열 · ybs1164
+</title>
+
+    
+      <link rel="canonical" href="http://ybs1164.github.io/ps/11054%EB%B2%88-%EA%B0%80%EC%9E%A5-%EA%B8%B4-%EB%B0%94%EC%9D%B4%ED%86%A0%EB%8B%89-%EB%B6%80%EB%B6%84-%EC%88%98%EC%97%B4/">
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.1.7/css/fork-awesome.min.css"
+      integrity="sha256-gsmEoJAws/Kd3CjuOQzLie5Q3yshhvmo7YNtBG7aaEY=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8/normalize.min.css">
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.f01c647a0d25b40da992a37c3376291185eed8a50ced8c26cc2c0bcfe38c97df.css" integrity="sha256-8Bxkeg0ltA2pkqN8M3YpEYXu2KUM7YwmzCwLz&#43;OMl98=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+    
+      <script defer src="https://twemoji.maxcdn.com/v/13.0.1/twemoji.min.js"
+        integrity="sha384-5f4X0lBluNY/Ib4VhGx0Pf6iDCF99VGXJIyYy7dDLY5QlEd7Ap0hICSSZA1XYbc4" crossorigin="anonymous"></script>
+    
+
+    <meta name="generator" content="Hugo 0.79.1" />
+  </head>
+
+  
+  
+  <body class="colorscheme-light"
+        onload=" twemoji.parse(document.body); "
+  >
+    
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      ybs1164
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/ps/">Algorithm</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/posts/">Blog</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container page">
+  <article>
+    <header>
+      <h1>11054번 가장 긴 바이토닉 부분 수열</h1>
+    </header>
+
+    <p>일단 C++ 이 내 주 언어니까 vsc 에 C/C++ 환경을 따로 마련을 해야 할텐데..
+이쪽 관련 내옹은 dev 카테고리에 따로 적는걸로 하겠다. 분량이 생각보다 많아질 것 같다.</p>
+<p>오늘은 시간이 그리 많지 않으니, 라즈비안을 깔 때 기본적으로 제공해주는 Geany 라는 ide 를 이용해보겠다. <del>기가 지니 아니다.</del> 아직 자세하게는 모르지만, 이걸로도 충분할 것 같다.</p>
+<hr>
+<h2 id="문제">문제</h2>
+<p><a href="https://www.acmicpc.net/problem/11054">https://www.acmicpc.net/problem/11054</a></p>
+<p>문제를 요약하자면 다음과 같다.
+수열이 주어지면 오름차순으로 한 번, 내림차순으로 한 번 훑었을 때 최장 수열 길이를 구하시오.
+(이게 이해가 안가면 링크를 타고 들어가 읽어보는 걸 추천한다.)</p>
+<blockquote>
+<p>10<br>
+1 5 2 1 4 3 4 5 2 1</p>
+</blockquote>
+<blockquote>
+<p>7</p>
+</blockquote>
+<p>여기서의 바이토닉 부분 수열은 1 2 3 4 5 2 1 이다.</p>
+<hr>
+<h2 id="풀이과정">풀이과정</h2>
+<p>보고 바로 생각난 풀이는 수열을 전부 돌아보고 최댓값들을 찾은 뒤, 그 최대값의 양 옆으로 LCS(최장 증가 수열)를 구한 뒤 그 두개의 길이를 더해서 최댓값을 정하는거다.</p>
+<p>그렇게 되면 이제 이런 케이스가 날 반긴다.</p>
+<blockquote>
+<p>10<br>
+1 2 3 4 5 4 3 2 1 10</p>
+</blockquote>
+<blockquote>
+<p>9</p>
+</blockquote>
+<p>내가 생각한 풀이대로 풀면 이게 6이 나올 것이다. 1 2 3 4 5 10 이런식으로.
+그래서 이걸 어떻게 풀어야 하지.. 하고 생각하던 찰나 굇수 JK 님이 풀이를 갑자기 딱 주셨다. (위의 케이스도 JK 님이 주신 것이다. 무한한 감사를 표합니다)</p>
+<p><strong>dp 배열 두개를 만들어서 하나는 오름차순, 다른 하나는 내림차순으로 만든 뒤 각 인덱스의 값을 더해주면 된다</strong>는 것이다. (여기에 대해 부가설명을 해야 하나 말아야 하나 고민을 좀 해봤는데, 그렇게 계속하다 보면 밑도 끝도 없을 것 같아서 생략하겠다. 알아서 이해하자.)</p>
+<p>맞다. 드럽게 쉬운 문제다. 이런 문제도 파악 못하는 자신을 반성해야 한다.</p>
+<hr>
+<p>소스 코드는 다음과 같다.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="">#include</span> <span style="">&lt;stdio.h&gt;</span><span style="">
+</span><span style=""></span><span style="">int</span> n,m;
+<span style="">int</span> a[1001];
+<span style="">int</span> d1[1001],d2[1001];
+<span style="">int</span> main(){
+    scanf(<span style="font-style:italic">&#34;%d&#34;</span>,&amp;n);
+    <span style="font-weight:bold">for</span> (<span style="">int</span> i=0;i&lt;n;i++)
+        scanf(<span style="font-style:italic">&#34;%d&#34;</span>,&amp;a[i]);
+    
+    <span style="font-weight:bold">for</span> (<span style="">int</span> i=0;i&lt;n;i++)
+        <span style="font-weight:bold">for</span> (<span style="">int</span> j=0;j&lt;i;j++)
+            <span style="font-weight:bold">if</span> (a[i]&gt;a[j] &amp;&amp; d1[i]&lt;d1[j]+1)
+                d1[i]=d1[j]+1;
+    
+    <span style="font-weight:bold">for</span> (<span style="">int</span> i=n-1;i&gt;=0;i--)
+        <span style="font-weight:bold">for</span> (<span style="">int</span> j=n-1;j&gt;i;j--)
+            <span style="font-weight:bold">if</span> (a[i]&gt;a[j] &amp;&amp; d2[i]&lt;d2[j]+1)
+                d2[i]=d2[j]+1;
+    
+    <span style="font-weight:bold">for</span> (<span style="">int</span> i=0;i&lt;n;i++){
+        <span style="font-weight:bold">if</span> (m&lt;d1[i]+d2[i]+1)
+            m=d1[i]+d2[i]+1;
+    }
+    printf(<span style="font-style:italic">&#34;%d&#34;</span>,m);
+    
+    <span style="font-weight:bold">return</span> 0;
+}
+</code></pre></div><p>혹 이해가 되지 않는다면 언제든지 질문해줬으면 좋겠다.
+그게 나에게도 공부가 될성 싶다.</p>
+<p>되도록 문제는 꼭 내 힘으로 풀도록 하자. 다른 사람 도움 없이. 그래야 실력이 는다.</p>
+
+  </article>
+</section>
+
+  
+
+      </div>
+
+      
+  <footer class="footer">
+    <section class="container">
+      
+        <p>왜 나만 밑에 쭈그려져 있는거지</p>
+      
+      
+        ©
+        
+        2020
+         ybs1164 
+      
+      
+         · 
+        Powered by <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/">Coder</a>.
+      
+      
+    </section>
+  </footer>
+
+
+    </main>
+
+    
+      
+        
+        <script src="/js/dark-mode.min.0213e1773e6d1c5a644f847c67a6f8abac49a3776e2976f6008038af8c5b76a1.js"></script>
+      
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+  </body>
+
+</html>
