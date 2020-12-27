@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on ybs1164</title>
+    <link>https://ybs1164.github.io/post/</link>
+    <description>Recent content in Posts on ybs1164</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>kr-ko</language>
+    <lastBuildDate>Sat, 26 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://ybs1164.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>한글 귀엽게 만들깅</title>
+      <link>https://ybs1164.github.io/p/%ED%95%9C%EA%B8%80-%EA%B7%80%EC%97%BD%EA%B2%8C-%EB%A7%8C%EB%93%A4%EA%B9%85/</link>
+      <pubDate>Sat, 26 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://ybs1164.github.io/p/%ED%95%9C%EA%B8%80-%EA%B7%80%EC%97%BD%EA%B2%8C-%EB%A7%8C%EB%93%A4%EA%B9%85/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>11054번 가장 긴 바이토닉 부분 수열</title>
+      <link>https://ybs1164.github.io/p/11054%EB%B2%88-%EA%B0%80%EC%9E%A5-%EA%B8%B4-%EB%B0%94%EC%9D%B4%ED%86%A0%EB%8B%89-%EB%B6%80%EB%B6%84-%EC%88%98%EC%97%B4/</link>
+      <pubDate>Mon, 21 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://ybs1164.github.io/p/11054%EB%B2%88-%EA%B0%80%EC%9E%A5-%EA%B8%B4-%EB%B0%94%EC%9D%B4%ED%86%A0%EB%8B%89-%EB%B6%80%EB%B6%84-%EC%88%98%EC%97%B4/</guid>
+      <description>일단 C++ 이 내 주 언어니까 vsc 에 C/C++ 환경을 따로 마련을 해야 할텐데.. 이쪽 관련 내옹은 dev 카테고리에 따로 적는걸로 하겠다. 분량이 생각보다 많아질 것 같다.
+오늘은 시간이 그리 많지 않으니, 라즈비안을 깔 때 기본적으로 제공해주는 Geany 라는 ide 를 이용해보겠다. 기가 지니 아니다. 아직 자세하게는 모르지만, 이걸로도 충분할 것 같다.
+ 문제 https://www.acmicpc.net/problem/11054
+문제를 요약하자면 다음과 같다. 수열이 주어지면 오름차순으로 한 번, 내림차순으로 한 번 훑었을 때 최장 수열 길이를 구하시오.</description>
+    </item>
+    
+  </channel>
+</rss>

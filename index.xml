@@ -1,69 +1,91 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>ybs1164</title>
-    <link>http://ybs1164.github.io/</link>
-    <description>Recent content on ybs1164</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Tue, 22 Dec 2020 21:53:40 +0900</lastBuildDate><atom:link href="http://ybs1164.github.io/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>todoist 후기</title>
-      <link>http://ybs1164.github.io/posts/todoist/</link>
-      <pubDate>Tue, 22 Dec 2020 21:53:40 +0900</pubDate>
-      
-      <guid>http://ybs1164.github.io/posts/todoist/</guid>
-      <description>최근에 Todoist 라는 걸 시작했다. 대충 설명하자면 자신이 해야 할 일들을 언제 어떻게 해야 할지 적어놓고 적혀있는대로 일을 하는거다. 이게 생각보다 굉장히 효력이 좋은 것 같다. 지금 3일 정도 사용해봤는데 너무 좋다. 여러분도 한번쯤 써봤으면 좋겠다. 굉장히 나태했던 내 이전 생활을 있어보이게 만들어 준다.
-이제 다시 개인적인 생각을 적자면&amp;hellip;
-나는 시간이 가는 것이 두렵다. 사람들이 시간에 대해 그다지 좋아하지도, 나빠하지도 않는다는 사실이 나에게는 조금 낯설다. 미래의 내가 어떻게 될지 모르는 것도 무섭고, 무엇보다 내 주변의 소중한 사람들이 추억으로밖에 남지 않았을 때가 두렵다.</description>
-    </item>
+    <channel>
+        <title>ybs1164</title>
+        <link>https://ybs1164.github.io/</link>
+        <description>Recent content on ybs1164</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>kr-ko</language>
+        <lastBuildDate>Sat, 26 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://ybs1164.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>한글 귀엽게 만들깅</title>
+        <link>https://ybs1164.github.io/p/%ED%95%9C%EA%B8%80-%EA%B7%80%EC%97%BD%EA%B2%8C-%EB%A7%8C%EB%93%A4%EA%B9%85/</link>
+        <pubDate>Sat, 26 Dec 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://ybs1164.github.io/p/%ED%95%9C%EA%B8%80-%EA%B7%80%EC%97%BD%EA%B2%8C-%EB%A7%8C%EB%93%A4%EA%B9%85/</guid>
+        <description>&lt;img src="https://ybs1164.github.io/p/%ED%95%9C%EA%B8%80-%EA%B7%80%EC%97%BD%EA%B2%8C-%EB%A7%8C%EB%93%A4%EA%B9%85/pawel-czerwinski-8uZPynIu-rQ-unsplash.jpg" alt="Featured image of post 한글 귀엽게 만들깅" /&gt;</description>
+        </item>
+        <item>
+        <title>11054번 가장 긴 바이토닉 부분 수열</title>
+        <link>https://ybs1164.github.io/p/11054%EB%B2%88-%EA%B0%80%EC%9E%A5-%EA%B8%B4-%EB%B0%94%EC%9D%B4%ED%86%A0%EB%8B%89-%EB%B6%80%EB%B6%84-%EC%88%98%EC%97%B4/</link>
+        <pubDate>Mon, 21 Dec 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://ybs1164.github.io/p/11054%EB%B2%88-%EA%B0%80%EC%9E%A5-%EA%B8%B4-%EB%B0%94%EC%9D%B4%ED%86%A0%EB%8B%89-%EB%B6%80%EB%B6%84-%EC%88%98%EC%97%B4/</guid>
+        <description>&lt;img src="https://ybs1164.github.io/p/11054%EB%B2%88-%EA%B0%80%EC%9E%A5-%EA%B8%B4-%EB%B0%94%EC%9D%B4%ED%86%A0%EB%8B%89-%EB%B6%80%EB%B6%84-%EC%88%98%EC%97%B4/pawel-czerwinski-8uZPynIu-rQ-unsplash.jpg" alt="Featured image of post 11054번 가장 긴 바이토닉 부분 수열" /&gt;&lt;p&gt;일단 C++ 이 내 주 언어니까 vsc 에 C/C++ 환경을 따로 마련을 해야 할텐데..
+이쪽 관련 내옹은 dev 카테고리에 따로 적는걸로 하겠다. 분량이 생각보다 많아질 것 같다.&lt;/p&gt;
+&lt;p&gt;오늘은 시간이 그리 많지 않으니, 라즈비안을 깔 때 기본적으로 제공해주는 Geany 라는 ide 를 이용해보겠다. &lt;del&gt;기가 지니 아니다.&lt;/del&gt; 아직 자세하게는 모르지만, 이걸로도 충분할 것 같다.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;문제&#34;&gt;문제&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.acmicpc.net/problem/11054&#34;&gt;https://www.acmicpc.net/problem/11054&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;문제를 요약하자면 다음과 같다.
+수열이 주어지면 오름차순으로 한 번, 내림차순으로 한 번 훑었을 때 최장 수열 길이를 구하시오.
+(이게 이해가 안가면 링크를 타고 들어가 읽어보는 걸 추천한다.)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;10&lt;br&gt;
+1 5 2 1 4 3 4 5 2 1&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;7&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;여기서의 바이토닉 부분 수열은 1 2 3 4 5 2 1 이다.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;풀이과정&#34;&gt;풀이과정&lt;/h2&gt;
+&lt;p&gt;보고 바로 생각난 풀이는 수열을 전부 돌아보고 최댓값들을 찾은 뒤, 그 최대값의 양 옆으로 LCS(최장 증가 수열)를 구한 뒤 그 두개의 길이를 더해서 최댓값을 정하는거다.&lt;/p&gt;
+&lt;p&gt;그렇게 되면 이제 이런 케이스가 날 반긴다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;10&lt;br&gt;
+1 2 3 4 5 4 3 2 1 10&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;9&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;내가 생각한 풀이대로 풀면 이게 6이 나올 것이다. 1 2 3 4 5 10 이런식으로.
+그래서 이걸 어떻게 풀어야 하지.. 하고 생각하던 찰나 굇수 JK 님이 풀이를 갑자기 딱 주셨다. (위의 케이스도 JK 님이 주신 것이다. 무한한 감사를 표합니다)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;dp 배열 두개를 만들어서 하나는 오름차순, 다른 하나는 내림차순으로 만든 뒤 각 인덱스의 값을 더해주면 된다&lt;/strong&gt;는 것이다. (여기에 대해 부가설명을 해야 하나 말아야 하나 고민을 좀 해봤는데, 그렇게 계속하다 보면 밑도 끝도 없을 것 같아서 생략하겠다. 알아서 이해하자.)&lt;/p&gt;
+&lt;p&gt;맞다. 드럽게 쉬운 문제다. 이런 문제도 파악 못하는 자신을 반성해야 한다.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;소스 코드는 다음과 같다.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;m&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1001&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;];&lt;/span&gt;
+&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;d1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1001&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;],&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;d2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1001&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;];&lt;/span&gt;
+&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(){&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;scanf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;%d&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;scanf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;%d&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]);&lt;/span&gt;
     
-    <item>
-      <title>2075번 N번째 큰 수</title>
-      <link>http://ybs1164.github.io/ps/2075%EB%B2%88-n%EB%B2%88%EC%A7%B8-%ED%81%B0-%EC%88%98/</link>
-      <pubDate>Mon, 21 Dec 2020 23:51:10 +0900</pubDate>
-      
-      <guid>http://ybs1164.github.io/ps/2075%EB%B2%88-n%EB%B2%88%EC%A7%B8-%ED%81%B0-%EC%88%98/</guid>
-      <description>문제 https://www.acmicpc.net/problem/2075
-문제에서는 다음과 같은 NxN 크기의 2차원 배열이 주어진다.
-   - - - - -     12 7 9 15 5   13 8 11 19 6   21 10 26 31 16   48 14 28 35 25   52 20 32 41 49    특징이 하나 있다면, 모든 수는 자신의 위에 있는 수보다 크다는 것이다. 우리는 여기서 N번째로 큰 수를 구하면 된다.</description>
-    </item>
+    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;d1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;d1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+                &lt;span class=&#34;n&#34;&gt;d1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;d1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
     
-    <item>
-      <title>11054번 가장 긴 바이토닉 부분 수열</title>
-      <link>http://ybs1164.github.io/ps/11054%EB%B2%88-%EA%B0%80%EC%9E%A5-%EA%B8%B4-%EB%B0%94%EC%9D%B4%ED%86%A0%EB%8B%89-%EB%B6%80%EB%B6%84-%EC%88%98%EC%97%B4/</link>
-      <pubDate>Mon, 21 Dec 2020 12:38:23 +0900</pubDate>
-      
-      <guid>http://ybs1164.github.io/ps/11054%EB%B2%88-%EA%B0%80%EC%9E%A5-%EA%B8%B4-%EB%B0%94%EC%9D%B4%ED%86%A0%EB%8B%89-%EB%B6%80%EB%B6%84-%EC%88%98%EC%97%B4/</guid>
-      <description>일단 C++ 이 내 주 언어니까 vsc 에 C/C++ 환경을 따로 마련을 해야 할텐데.. 이쪽 관련 내옹은 dev 카테고리에 따로 적는걸로 하겠다. 분량이 생각보다 많아질 것 같다.
-오늘은 시간이 그리 많지 않으니, 라즈비안을 깔 때 기본적으로 제공해주는 Geany 라는 ide 를 이용해보겠다. 기가 지니 아니다. 아직 자세하게는 모르지만, 이걸로도 충분할 것 같다.
- 문제 https://www.acmicpc.net/problem/11054
-문제를 요약하자면 다음과 같다. 수열이 주어지면 오름차순으로 한 번, 내림차순으로 한 번 훑었을 때 최장 수열 길이를 구하시오.</description>
-    </item>
+    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;=&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;d2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;d2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+                &lt;span class=&#34;n&#34;&gt;d2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;d2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
     
-    <item>
-      <title>시작하며 - 블로그</title>
-      <link>http://ybs1164.github.io/posts/init-posts/</link>
-      <pubDate>Mon, 21 Dec 2020 00:13:13 +0900</pubDate>
-      
-      <guid>http://ybs1164.github.io/posts/init-posts/</guid>
-      <description>시작하며 라는 글에 내가 쓸 글에 관한 내용이 너무 두루뭉실하게 적힌 것 같아서 내가 적을 글에 어떤 내용이 들어가는지를 밝혀볼까 한다.
- 카테고리는 나중에 추가될 수 있다.
-  개발 (dev) 온전히 개발 관련된 글들을 적을 것이다. 여기에서 적히는 거의 대부분의 글들은 두 번째 규칙인 &amp;ldquo;모두가 이해할 수 있어야 한다&amp;rdquo; 를 어기겠지만, 어느 정도는 감안하고 봐주시면 감사하겠습니다.
- 일기장 (posts) 내 개인적인 생각들을 끄적이는 곳이다. 이 곳에서는 매일 하나 정도의 글이 나올 것을 보장하지만, 분량은 그만큼 적을 것이다.</description>
-    </item>
+    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;){&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;m&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;d1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;d2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;m&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;d1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;d2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;printf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;%d&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;m&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
     
-    <item>
-      <title>시작하며</title>
-      <link>http://ybs1164.github.io/posts/init/</link>
-      <pubDate>Sun, 20 Dec 2020 11:44:29 +0900</pubDate>
-      
-      <guid>http://ybs1164.github.io/posts/init/</guid>
-      <description>나는 이 블로그를 마냥 개발 블로그로만 이용하진 않을 거다. 따라서 내가 글을 쓸 때의 몇 가지 규칙을 한 번 정해볼까 한다. 약간 헌법과 비슷한 그런 통용되는 규칙 같은거다.
- 규칙은 나중에 추가될 수 있다.
-  첫 번째로, 모두가 볼 수 있어야 한다. 간단한것처럼 보이지만 그리 쉽지는 않을 거라 생각된다. 나한테는 7살 어린 동생이 하나 있는데, 얘한테도 건전한 블로그가 되고 싶다는 생각에 이 규칙을 추가한다.
-두 번째로, 모두가 이해할 수 있어야 한다.</description>
-    </item>
-    
-  </channel>
+    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;혹 이해가 되지 않는다면 언제든지 질문해줬으면 좋겠다.
+그게 나에게도 공부가 될성 싶다.&lt;/p&gt;
+&lt;p&gt;되도록 문제는 꼭 내 힘으로 풀도록 하자. 다른 사람 도움 없이. 그래야 실력이 는다.&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
 </rss>
