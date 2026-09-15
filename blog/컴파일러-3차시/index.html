@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Blog - Numberer</title>
-<meta name="description" content="Numberer의 블로그">
+<title>컴파일러 3차시 - Numberer Blog</title>
+<meta name="description" content="컴파일러 3차시">
 <style>
   :root {
     color-scheme: light dark;
@@ -83,21 +83,52 @@
 <body>
 <main>
   <header class="site-header">
-    <a class="home" href="../index.html">Numberer</a>
-    <a href="../blog/index.html">Blog</a>
+    <a class="home" href="../../index.html">Numberer</a>
+    <a href="../../blog/index.html">Blog</a>
   </header>
   
-    <h1>Blog</h1>
-    <ul class="post-list">
-      <li>
-        <a href="./개발-블로그-시작합니다/index.html">개발 블로그 시작합니다.</a>
-        <div class="post-date">2026-09-15</div>
-      </li>
-      <li>
-        <a href="./컴파일러-3차시/index.html">컴파일러 3차시</a>
-        <div class="post-date">2026-09-15</div>
-      </li></ul>
-  
+      <article class="content">
+        <h1>컴파일러 3차시</h1>
+        <div class="post-meta">2026-09-15 · <span class="tag">C</span></div>
+        <p>LR Parsing 과정을 배운 후 본격적으로 C언어의 문법에 대해 학습했다.</p>
+<p>오늘 집중적으로 배운 부분은 일반 선언문(Declaration). C언어 내부에서 일반적인 변수를 선언할 때의 문법을 학습함.</p>
+<p>예를 들어 아래와 같은 친구가 있다고 가정하자.</p>
+<pre><code class="language-c">int a = 1;
+</code></pre>
+<p>이럴 때 이 구문은 이렇게 문법이 해석된다. 탑 다운 방식으로 진행해보겠다.</p>
+<pre><code class="language-c">declaration
+-&gt; declaration_specifiers init_declarator_list ;
+-&gt; type_specifier init_declarator_list ;
+-&gt; type_specifier init_declarator ;
+-&gt; type_specifier declarator = initializer ;
+...
+</code></pre>
+<h3>Storage Class Specifier</h3>
+<ul>
+<li>메모리와 관련된 키워드</li>
+<li>static / auto</li>
+<li>외 3가지</li>
+</ul>
+<h3>Type Specifier</h3>
+<ul>
+<li>타입 정의 키워드</li>
+<li>원시 자료형</li>
+<li>enum { … }</li>
+<li>struct { … }</li>
+</ul>
+<blockquote>
+<p>💡 컴파일러에서 탑 다운(Top down) 방식은 무엇인가?</p>
+</blockquote>
+<blockquote>
+<p>💡 static 키워드와 auto 키워드의 차이는 무엇인가?</p>
+</blockquote>
+<h2>느낀 점</h2>
+<p>노션을 자주 쓰기 때문에 연동을 통해 글을 처음 작성해보는데, 생각보다 너무 편리하다. 굉장히 좋다. 양식도 작성해보고, 앞으로의 글 작성 방식도 생각해봐야겠다.</p>
+<p>짬을 내서 작성하는 만큼 바로바로 양질의 글을 작성하기는 힘들기 때문에, 일단 질문들을 놓고 계속 방문하면서 생각날 때마다 하나씩 보충하며 질문해나가는 느낌으로 작성해야겠다.</p>
+<p>그나저나 컴파일러 과목이 굉장히 재미있다. 메모리 단을 다룰 수 있는 프로젝트를 조금씩 시도해보고 싶다는 생각이 들었다. 출시 일정들 빠르게 마무리하고 진행해봐야겠다.</p>
+
+      </article>
+    
   <footer>&copy; 2026 Numberer</footer>
 </main>
 </body>
