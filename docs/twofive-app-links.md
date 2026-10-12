@@ -30,11 +30,8 @@ Host/path are also in `addons/DeepLink/deep_link_plugin.gd` and
 - `25/index.html` carries the OG/Twitter tags; the preview image is
   `assets/25/og.png` (1200x630), rendered from `scripts/og-25.html`:
   `msedge --headless --screenshot=assets/25/og.png --window-size=1200,630 file:///<repo>/scripts/og-25.html`
-- Previews are static: every shared link shows the same image. The page itself
-  shows a card for the character/mode/seed (`c`, `m`, `s`) or a puzzle (`p`/`z`);
-  the character table in the page script mirrors `Settings.Character` /
-  `CharacterManager` in the game - update it when characters are added.
+- Previews are static: every shared link shows the same image.
 - Messengers cache previews. After changing `og.png`, refresh them with the
   Kakao link debugger / Facebook Sharing Debugger.
 
-- Font: Galmuri11 (SIL OFL) Latin subset at assets/25/fonts/Galmuri11-latin.woff. Keep sizes at multiples of 11px and avoid bold/rounded corners to stay crisp. Re-subset with: python -m fontTools.subset Galmuri11.ttf --unicodes=U+0020-007E,U+00B7,U+00D7,U+2013,U+2014,U+2019 --flavor=woff --output-file=...
+- Font: Galmuri11 (SIL OFL) Latin subset at assets/25/fonts/Galmuri11-latin.woff. Keep sizes at multiples of 11px to stay crisp. Re-subset with: python -m fontTools.subset Galmuri11.ttf --unicodes=U+0020-007E,U+00B7,U+00D7,U+2013,U+2014,U+2019 --flavor=woff --output-file=...

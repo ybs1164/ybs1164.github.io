@@ -40,100 +40,34 @@
     --bg: #f2f2f2;
     --fg: #000;
     --muted: #555;
-    --card: #fff;
-    --line: #000;
-    --btn-bg: #000;
-    --btn-fg: #f2f2f2;
-    --shadow: #000;
-    --px: 4px;
   }
   @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #4d4d4d;
-      --fg: #f2f2f2;
-      --muted: #ccc;
-      --card: #3a3a3a;
-      --line: #f2f2f2;
-      --btn-bg: #f2f2f2;
-      --btn-fg: #000;
-      --shadow: #1f1f1f;
-    }
+    :root { --bg: #4d4d4d; --fg: #f2f2f2; --muted: #ccc; }
   }
   * { box-sizing: border-box; }
   html { font-synthesis: none; -webkit-font-smoothing: none; }
   body {
     margin: 0; min-height: 100vh; padding: 24px 16px;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px;
     background: var(--bg); color: var(--fg); text-align: center;
-    font-family: "Galmuri11", ui-monospace, monospace; font-size: 11px; font-weight: 400;
-    /* faint 5x5 pixel grid, echoing the game board */
-    background-image:
-      linear-gradient(var(--grid) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-    background-size: 44px 44px;
-    --grid: rgba(0, 0, 0, .05);
+    font-family: "Galmuri11", ui-monospace, monospace; font-weight: 400;
   }
-  @media (prefers-color-scheme: dark) { body { --grid: rgba(255, 255, 255, .05); } }
-  main { width: 100%; max-width: 352px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
-  .icon {
-    width: 132px; height: 132px; background: #fff; padding: 0;
-    image-rendering: pixelated; border: var(--px) solid var(--line);
-    box-shadow: 8px 8px 0 var(--shadow);
-    animation: pop .4s steps(4) both;
+  h1 { margin: 0; font-size: 88px; line-height: 1; font-weight: 400; letter-spacing: 4px;
+       text-shadow: 4px 0 0 currentColor, 0 4px 0 currentColor, 4px 4px 0 currentColor; }
+  p { margin: 0; font-size: 11px; line-height: 22px; color: var(--muted); }
+  a {
+    display: block; width: 100%; max-width: 308px; padding: 14px 20px; margin-top: 11px;
+    font-size: 22px; line-height: 22px; text-decoration: none;
+    background: var(--fg); color: var(--bg);
   }
-  h1 { margin: 8px 0 0; font-size: 66px; line-height: 1; font-weight: 400; letter-spacing: 4px; text-shadow: 3px 0 0 currentColor, 0 3px 0 currentColor, 3px 3px 0 currentColor; }
-  .tagline { margin: 0; font-size: 11px; line-height: 22px; color: var(--muted); }
-
-  .run {
-    display: none; width: 100%; padding: 14px 16px;
-    background: var(--card); border: var(--px) solid var(--line); box-shadow: 6px 6px 0 var(--shadow);
-    text-align: left; animation: rise .4s .1s steps(4) both;
-  }
-  .run.show { display: block; }
-  .run .label { margin: 0 0 8px; font-size: 11px; line-height: 11px; color: var(--muted); }
-  .run .who { display: flex; align-items: center; gap: 10px; font-size: 22px; line-height: 22px; }
-  .run .dot { width: 22px; height: 22px; border: 2px solid var(--line); flex: none; }
-  .run .meta { margin: 10px 0 0; font-size: 11px; line-height: 17px; color: var(--muted); }
-
-  .actions { width: 100%; display: flex; flex-direction: column; gap: 14px; margin-top: 4px; }
-  a.btn {
-    display: block; padding: 14px 20px; font-size: 22px; line-height: 22px;
-    text-decoration: none; background: var(--btn-bg); color: var(--btn-fg);
-    border: var(--px) solid var(--line); box-shadow: 6px 6px 0 var(--shadow);
-  }
-  a.btn.alt { background: var(--bg); color: var(--fg); }
-  a.btn:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 var(--shadow); }
-  a.btn:active { transform: translate(6px, 6px); box-shadow: 0 0 0 var(--shadow); }
-  a.btn:focus-visible { outline: var(--px) dashed #4d9eeb; outline-offset: 4px; }
-
-  #hint { margin: 0; font-size: 11px; line-height: 17px; color: var(--muted); }
-  footer { margin-top: 28px; font-size: 11px; color: var(--muted); }
-  footer a { color: inherit; }
-
-  @keyframes pop { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-  @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+  a:active { opacity: .8; }
+  a:focus-visible { outline: 4px dashed #4d9eeb; outline-offset: 4px; }
 </style>
 </head>
 <body>
-<main>
-  <img class="icon" src="/assets/25/icon-192.png" alt="25 app icon" width="112" height="112">
-  <h1>25</h1>
-  <p class="tagline">A tense puzzle-action game on a 5&times;5 grid.<br>Dodge enemies, read the lasers, slip out.</p>
-
-  <section class="run" id="run" aria-live="polite">
-    <p class="label" id="run-label">Shared run</p>
-    <div class="who"><span class="dot" id="run-dot"></span><span id="run-title"></span></div>
-    <p class="meta" id="run-meta"></p>
-  </section>
-
-  <div class="actions">
-    <a class="btn" id="open" href="#">Play in the 25 app</a>
-    <a class="btn alt" id="store" href="#">Get it on Google Play</a>
-  </div>
-  <p id="hint">Opened inside another app (KakaoTalk, etc.) and nothing happens? Open this page in Chrome instead.</p>
-</main>
-<footer><a href="/">Numberer</a></footer>
+<h1>25</h1>
+<p>A tense puzzle-action game on a 5&times;5 grid.<br>Dodge enemies, read the lasers, slip out.</p>
+<a href="https://play.google.com/store/apps/details?id=com.numberer.twofive">Get it on Google Play</a>
 <script>
 // Shared-run link: https://ybs1164.github.io/25/?c=<character>&m=<mode>&s=<seed>
 //
@@ -144,67 +78,12 @@
 // The intent:// URL covers both: it starts the app if installed, and otherwise
 // falls back to the Play Store.
 (function () {
+  if (!/Android/i.test(navigator.userAgent)) return;
   var PACKAGE = 'com.numberer.twofive';
   var STORE = 'https://play.google.com/store/apps/details?id=' + PACKAGE;
-  var isAndroid = /Android/i.test(navigator.userAgent);
-
-  // Ids/colors mirror Settings.Character and CharacterManager in the game.
-  var CHARACTERS = {
-    0:  ['Green',   '#4AD278', 'When escaping, all enemies are destroyed.'],
-    2:  ['Brown',   '#814B41', 'No special abilities. The original experience.'],
-    3:  ['Blue',    '#608AE1', 'Can push walls.'],
-    4:  ['Black',   '#333333', 'Can move through adjacent enemies.'],
-    5:  ['Pink',    '#E052C8', 'Leaves a wall behind every time it moves.'],
-    6:  ['Orange',  '#EE8525', 'Escaping creates a clone that moves the opposite way.'],
-    7:  ['Purple',  '#CC00CC', 'Escaping fires a laser through that row or column.'],
-    8:  ['Skyblue', '#38BDED', 'When escaping, creates a clone in its place.'],
-    10: ['Yellow',  '#FFCA28', 'Leaps over walls until it clears one.']
-  };
-  var MODES = { 0: 'Heart Beat', 1: 'Time Limit', 2: 'Practice' };
-
-  function $(id) { return document.getElementById(id); }
-
-  // Shared-run card (textContent only: the query string is untrusted).
-  (function () {
-    var q = new URLSearchParams(location.search);
-    var run = $('run');
-    if (q.has('p') || q.has('z')) {
-      $('run-label').textContent = 'Shared puzzle';
-      $('run-title').textContent = 'A puzzle challenge';
-      $('run-meta').textContent = 'Open it in the app to try this puzzle.';
-      $('run-dot').style.background = '#4D9EEB';
-      run.className += ' show';
-      return;
-    }
-    var c = q.get('c'), s = q.get('s');
-    if (!/^\d+$/.test(c || '') || !/^\d+$/.test(s || '') || !CHARACTERS[+c]) return;
-    var ch = CHARACTERS[+c];
-    var mode = MODES[+q.get('m')] || MODES[0];
-    $('run-dot').style.background = ch[1];
-    $('run-title').textContent = ch[0] + ' · ' + mode;
-    $('run-meta').textContent = ch[2] + ' Seed ' + s.slice(0, 12) + '.';
-    run.className += ' show';
-  })();
-
-  var storeLink = $('store');
-  var openLink = $('open');
-  storeLink.href = STORE;
-
-  if (!isAndroid) {
-    // No Android app to open here (desktop / iOS).
-    openLink.style.display = 'none';
-    $('hint').style.display = 'none';
-    return;
-  }
-
-  var intentUrl = 'intent://' + location.host + location.pathname + location.search +
+  location.replace('intent://' + location.host + location.pathname + location.search +
     '#Intent;scheme=https;package=' + PACKAGE +
-    ';S.browser_fallback_url=' + encodeURIComponent(STORE) + ';end';
-  openLink.href = intentUrl;
-
-  // Try once automatically; some in-app browsers block this without a tap,
-  // which is what the button above is for.
-  location.replace(intentUrl);
+    ';S.browser_fallback_url=' + encodeURIComponent(STORE) + ';end');
 })();
 </script>
 </body>
