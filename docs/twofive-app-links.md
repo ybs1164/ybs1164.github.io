@@ -24,3 +24,15 @@ the Play Store.
 
 Host/path are also in `addons/DeepLink/deep_link_plugin.gd` and
 `Scripts/deep_link_manager.gd` - keep all three in sync.
+
+## Link preview / landing design
+
+- `25/index.html` carries the OG/Twitter tags; the preview image is
+  `assets/25/og.png` (1200x630), rendered from `scripts/og-25.html`:
+  `msedge --headless --screenshot=assets/25/og.png --window-size=1200,630 file:///<repo>/scripts/og-25.html`
+- Previews are static: every shared link shows the same image. The page itself
+  shows a card for the character/mode/seed (`c`, `m`, `s`) or a puzzle (`p`/`z`);
+  the character table in the page script mirrors `Settings.Character` /
+  `CharacterManager` in the game - update it when characters are added.
+- Messengers cache previews. After changing `og.png`, refresh them with the
+  Kakao link debugger / Facebook Sharing Debugger.

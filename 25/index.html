@@ -3,28 +3,117 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>25</title>
+<title>25 - 5x5 grid puzzle action</title>
+<meta name="description" content="25 is a tense puzzle-action game on a 5x5 grid. Dodge enemies, read the lasers and slip out of the grid. Join a shared run with the same seed.">
+<meta name="theme-color" content="#f2f2f2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#4d4d4d" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" href="/assets/25/icon-192.png">
+<link rel="apple-touch-icon" href="/assets/25/icon-192.png">
+<link rel="canonical" href="https://ybs1164.github.io/25/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Numberer">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="25 - Play the same run with me">
+<meta property="og:description" content="A tense 5x5 grid puzzle-action game. Dodge enemies, read the lasers and slip out of the grid.">
+<meta property="og:url" content="https://ybs1164.github.io/25/">
+<meta property="og:image" content="https://ybs1164.github.io/assets/25/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="25 - 5x5 grid puzzle action">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="25 - Play the same run with me">
+<meta name="twitter:description" content="A tense 5x5 grid puzzle-action game. Dodge enemies, read the lasers and slip out of the grid.">
+<meta name="twitter:image" content="https://ybs1164.github.io/assets/25/og.png">
+
 <style>
-  body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center;
-         justify-content: center; gap: 14px; font-family: sans-serif; background: #f2f2f2; color: #000; text-align: center; padding: 0 16px; }
-  h1 { font-size: 64px; margin: 0; }
-  a.btn { display: block; min-width: 240px; padding: 14px 20px; border-radius: 10px; background: #000; color: #f2f2f2;
-          text-decoration: none; font-size: 18px; }
-  a.btn.alt { background: transparent; color: #000; border: 2px solid #000; }
-  p { margin: 0; font-size: 13px; color: #555; max-width: 300px; }
-  @media (prefers-color-scheme: dark) {
-    body { background: #4d4d4d; color: #f2f2f2; }
-    a.btn { background: #f2f2f2; color: #000; }
-    a.btn.alt { background: transparent; color: #f2f2f2; border-color: #f2f2f2; }
-    p { color: #ccc; }
+  :root {
+    color-scheme: light dark;
+    --bg: #f2f2f2;
+    --fg: #000;
+    --muted: #555;
+    --card: #fff;
+    --line: rgba(0, 0, 0, .12);
+    --btn-bg: #000;
+    --btn-fg: #f2f2f2;
   }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #4d4d4d;
+      --fg: #f2f2f2;
+      --muted: #ccc;
+      --card: #5c5c5c;
+      --line: rgba(255, 255, 255, .18);
+      --btn-bg: #f2f2f2;
+      --btn-fg: #000;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; padding: 24px 16px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: var(--bg); color: var(--fg); text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  main { width: 100%; max-width: 340px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .icon {
+    width: 112px; height: 112px; border-radius: 24px; background: #fff;
+    image-rendering: pixelated; box-shadow: 0 6px 24px rgba(0, 0, 0, .18);
+    animation: pop .5s ease-out both;
+  }
+  h1 { margin: 6px 0 0; font-size: 56px; line-height: 1; letter-spacing: .04em; }
+  .tagline { margin: 0; font-size: 15px; line-height: 1.5; color: var(--muted); }
+
+  .run {
+    display: none; width: 100%; padding: 14px 16px; border-radius: 14px;
+    background: var(--card); border: 1px solid var(--line); text-align: left;
+    animation: rise .45s .1s ease-out both;
+  }
+  .run.show { display: block; }
+  .run .label { margin: 0 0 8px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .run .who { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 600; }
+  .run .dot { width: 20px; height: 20px; border-radius: 5px; border: 1px solid var(--line); flex: none; }
+  .run .meta { margin: 6px 0 0; font-size: 13px; color: var(--muted); line-height: 1.45; }
+
+  .actions { width: 100%; display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+  a.btn {
+    display: block; padding: 14px 20px; border-radius: 12px; font-size: 17px; font-weight: 600;
+    text-decoration: none; background: var(--btn-bg); color: var(--btn-fg);
+    border: 2px solid var(--btn-bg); transition: transform .12s ease, opacity .12s ease;
+  }
+  a.btn.alt { background: transparent; color: var(--fg); border-color: var(--fg); }
+  a.btn:hover { opacity: .88; }
+  a.btn:active { transform: scale(.97); }
+  a.btn:focus-visible { outline: 3px solid #4d9eeb; outline-offset: 2px; }
+
+  #hint { margin: 0; font-size: 13px; line-height: 1.5; color: var(--muted); }
+  footer { margin-top: 28px; font-size: 12px; color: var(--muted); }
+  footer a { color: inherit; }
+
+  @keyframes pop { from { opacity: 0; transform: scale(.85); } to { opacity: 1; transform: none; } }
+  @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 </style>
 </head>
 <body>
-<h1>25</h1>
-<a class="btn" id="open" href="#">Play in the 25 app</a>
-<a class="btn alt" id="store" href="#">Get it on Google Play</a>
-<p id="hint">Opened inside another app (KakaoTalk, etc.) and nothing happens? Open this page in Chrome instead.</p>
+<main>
+  <img class="icon" src="/assets/25/icon-192.png" alt="25 app icon" width="112" height="112">
+  <h1>25</h1>
+  <p class="tagline">A tense puzzle-action game on a 5&times;5 grid.<br>Dodge enemies, read the lasers, slip out.</p>
+
+  <section class="run" id="run" aria-live="polite">
+    <p class="label" id="run-label">Shared run</p>
+    <div class="who"><span class="dot" id="run-dot"></span><span id="run-title"></span></div>
+    <p class="meta" id="run-meta"></p>
+  </section>
+
+  <div class="actions">
+    <a class="btn" id="open" href="#">Play in the 25 app</a>
+    <a class="btn alt" id="store" href="#">Get it on Google Play</a>
+  </div>
+  <p id="hint">Opened inside another app (KakaoTalk, etc.) and nothing happens? Open this page in Chrome instead.</p>
+</main>
+<footer><a href="/">Numberer</a></footer>
 <script>
 // Shared-run link: https://ybs1164.github.io/25/?c=<character>&m=<mode>&s=<seed>
 //
@@ -39,14 +128,52 @@
   var STORE = 'https://play.google.com/store/apps/details?id=' + PACKAGE;
   var isAndroid = /Android/i.test(navigator.userAgent);
 
-  var storeLink = document.getElementById('store');
-  var openLink = document.getElementById('open');
+  // Ids/colors mirror Settings.Character and CharacterManager in the game.
+  var CHARACTERS = {
+    0:  ['Green',   '#4AD278', 'When escaping, all enemies are destroyed.'],
+    2:  ['Brown',   '#814B41', 'No special abilities. The original experience.'],
+    3:  ['Blue',    '#608AE1', 'Can push walls.'],
+    4:  ['Black',   '#333333', 'Can move through adjacent enemies.'],
+    5:  ['Pink',    '#E052C8', 'Leaves a wall behind every time it moves.'],
+    6:  ['Orange',  '#EE8525', 'Escaping creates a clone that moves the opposite way.'],
+    7:  ['Purple',  '#CC00CC', 'Escaping fires a laser through that row or column.'],
+    8:  ['Skyblue', '#38BDED', 'When escaping, creates a clone in its place.'],
+    10: ['Yellow',  '#FFCA28', 'Leaps over walls until it clears one.']
+  };
+  var MODES = { 0: 'Heart Beat', 1: 'Time Limit', 2: 'Practice' };
+
+  function $(id) { return document.getElementById(id); }
+
+  // Shared-run card (textContent only: the query string is untrusted).
+  (function () {
+    var q = new URLSearchParams(location.search);
+    var run = $('run');
+    if (q.has('p') || q.has('z')) {
+      $('run-label').textContent = 'Shared puzzle';
+      $('run-title').textContent = 'A puzzle challenge';
+      $('run-meta').textContent = 'Open it in the app to try this puzzle.';
+      $('run-dot').style.background = '#4D9EEB';
+      run.className += ' show';
+      return;
+    }
+    var c = q.get('c'), s = q.get('s');
+    if (!/^\d+$/.test(c || '') || !/^\d+$/.test(s || '') || !CHARACTERS[+c]) return;
+    var ch = CHARACTERS[+c];
+    var mode = MODES[+q.get('m')] || MODES[0];
+    $('run-dot').style.background = ch[1];
+    $('run-title').textContent = ch[0] + ' · ' + mode;
+    $('run-meta').textContent = ch[2] + ' Seed ' + s.slice(0, 12) + '.';
+    run.className += ' show';
+  })();
+
+  var storeLink = $('store');
+  var openLink = $('open');
   storeLink.href = STORE;
 
   if (!isAndroid) {
     // No Android app to open here (desktop / iOS).
     openLink.style.display = 'none';
-    document.getElementById('hint').style.display = 'none';
+    $('hint').style.display = 'none';
     return;
   }
 
