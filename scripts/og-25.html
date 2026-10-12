@@ -2,15 +2,17 @@
 <!-- Source for assets/25/og.png (1200x630). Regenerate with:
      msedge --headless --screenshot=assets/25/og.png --window-size=1200,630 file:///.../scripts/og-25.html -->
 <html><head><meta charset="utf-8"><style>
-  html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
-  body { background: #f2f2f2; color: #000; font-family: "Segoe UI", Roboto, sans-serif;
-         display: flex; align-items: center; justify-content: center; gap: 72px; }
-  .logo { width: 300px; height: 300px; image-rendering: pixelated; background: #fff; border-radius: 56px;
-          box-shadow: 0 16px 48px rgba(0,0,0,.18); }
-  h1 { margin: 0; font-size: 200px; line-height: 1; letter-spacing: .04em; }
-  p { margin: 12px 0 0; font-size: 36px; line-height: 1.4; color: #444; }
-  .grid { display: grid; grid-template-columns: repeat(5, 28px); gap: 6px; margin-top: 32px; }
-  .grid i { width: 28px; height: 28px; background: #000; opacity: .12; border-radius: 4px; }
+  @font-face { font-family: "Galmuri11"; src: url("../assets/25/fonts/Galmuri11-latin.woff") format("woff"); }
+  html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; font-synthesis: none; }
+  body { background: #f2f2f2; color: #000; font-family: "Galmuri11", monospace;
+         background-image: linear-gradient(rgba(0,0,0,.05) 2px, transparent 2px), linear-gradient(90deg, rgba(0,0,0,.05) 2px, transparent 2px);
+         background-size: 88px 88px; background-position: 20px 20px;
+         display: flex; align-items: center; justify-content: center; gap: 80px; }
+  .logo { width: 308px; height: 308px; image-rendering: pixelated; background: #fff; border: 11px solid #000; box-shadow: 22px 22px 0 #000; }
+  h1 { margin: 0; font-size: 198px; line-height: 1; font-weight: 400; letter-spacing: 11px; text-shadow: 9px 0 0 #000, 0 9px 0 #000, 9px 9px 0 #000; }
+  p { margin: 22px 0 0; font-size: 33px; line-height: 55px; color: #444; }
+  .grid { display: grid; grid-template-columns: repeat(5, 33px); gap: 8px; margin-top: 36px; }
+  .grid i { width: 33px; height: 33px; background: #000; opacity: .14; }
   .grid i.p { background: #4AD278; opacity: 1; } .grid i.e { background: #EB4D4D; opacity: 1; }
 </style></head><body>
 <img class="logo" src="../assets/25/icon-192.png">

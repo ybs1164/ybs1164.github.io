@@ -26,71 +26,91 @@
 <meta name="twitter:description" content="A tense 5x5 grid puzzle-action game. Dodge enemies, read the lasers and slip out of the grid.">
 <meta name="twitter:image" content="https://ybs1164.github.io/assets/25/og.png">
 
+<link rel="preload" href="/assets/25/fonts/Galmuri11-latin.woff" as="font" type="font/woff" crossorigin>
 <style>
+  /* Galmuri11 (SIL OFL), Latin subset. Pixel font: keep sizes at multiples of 11px
+     and never synthesize bold, or the pixels get smeared. */
+  @font-face {
+    font-family: "Galmuri11";
+    src: url("/assets/25/fonts/Galmuri11-latin.woff") format("woff");
+    font-display: swap;
+  }
   :root {
     color-scheme: light dark;
     --bg: #f2f2f2;
     --fg: #000;
     --muted: #555;
     --card: #fff;
-    --line: rgba(0, 0, 0, .12);
+    --line: #000;
     --btn-bg: #000;
     --btn-fg: #f2f2f2;
+    --shadow: #000;
+    --px: 4px;
   }
   @media (prefers-color-scheme: dark) {
     :root {
       --bg: #4d4d4d;
       --fg: #f2f2f2;
       --muted: #ccc;
-      --card: #5c5c5c;
-      --line: rgba(255, 255, 255, .18);
+      --card: #3a3a3a;
+      --line: #f2f2f2;
       --btn-bg: #f2f2f2;
       --btn-fg: #000;
+      --shadow: #1f1f1f;
     }
   }
   * { box-sizing: border-box; }
+  html { font-synthesis: none; -webkit-font-smoothing: none; }
   body {
     margin: 0; min-height: 100vh; padding: 24px 16px;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     background: var(--bg); color: var(--fg); text-align: center;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: "Galmuri11", ui-monospace, monospace; font-size: 11px; font-weight: 400;
+    /* faint 5x5 pixel grid, echoing the game board */
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 44px 44px;
+    --grid: rgba(0, 0, 0, .05);
   }
-  main { width: 100%; max-width: 340px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  @media (prefers-color-scheme: dark) { body { --grid: rgba(255, 255, 255, .05); } }
+  main { width: 100%; max-width: 352px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
   .icon {
-    width: 112px; height: 112px; border-radius: 24px; background: #fff;
-    image-rendering: pixelated; box-shadow: 0 6px 24px rgba(0, 0, 0, .18);
-    animation: pop .5s ease-out both;
+    width: 132px; height: 132px; background: #fff; padding: 0;
+    image-rendering: pixelated; border: var(--px) solid var(--line);
+    box-shadow: 8px 8px 0 var(--shadow);
+    animation: pop .4s steps(4) both;
   }
-  h1 { margin: 6px 0 0; font-size: 56px; line-height: 1; letter-spacing: .04em; }
-  .tagline { margin: 0; font-size: 15px; line-height: 1.5; color: var(--muted); }
+  h1 { margin: 8px 0 0; font-size: 66px; line-height: 1; font-weight: 400; letter-spacing: 4px; text-shadow: 3px 0 0 currentColor, 0 3px 0 currentColor, 3px 3px 0 currentColor; }
+  .tagline { margin: 0; font-size: 11px; line-height: 22px; color: var(--muted); }
 
   .run {
-    display: none; width: 100%; padding: 14px 16px; border-radius: 14px;
-    background: var(--card); border: 1px solid var(--line); text-align: left;
-    animation: rise .45s .1s ease-out both;
+    display: none; width: 100%; padding: 14px 16px;
+    background: var(--card); border: var(--px) solid var(--line); box-shadow: 6px 6px 0 var(--shadow);
+    text-align: left; animation: rise .4s .1s steps(4) both;
   }
   .run.show { display: block; }
-  .run .label { margin: 0 0 8px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
-  .run .who { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 600; }
-  .run .dot { width: 20px; height: 20px; border-radius: 5px; border: 1px solid var(--line); flex: none; }
-  .run .meta { margin: 6px 0 0; font-size: 13px; color: var(--muted); line-height: 1.45; }
+  .run .label { margin: 0 0 8px; font-size: 11px; line-height: 11px; color: var(--muted); }
+  .run .who { display: flex; align-items: center; gap: 10px; font-size: 22px; line-height: 22px; }
+  .run .dot { width: 22px; height: 22px; border: 2px solid var(--line); flex: none; }
+  .run .meta { margin: 10px 0 0; font-size: 11px; line-height: 17px; color: var(--muted); }
 
-  .actions { width: 100%; display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+  .actions { width: 100%; display: flex; flex-direction: column; gap: 14px; margin-top: 4px; }
   a.btn {
-    display: block; padding: 14px 20px; border-radius: 12px; font-size: 17px; font-weight: 600;
+    display: block; padding: 14px 20px; font-size: 22px; line-height: 22px;
     text-decoration: none; background: var(--btn-bg); color: var(--btn-fg);
-    border: 2px solid var(--btn-bg); transition: transform .12s ease, opacity .12s ease;
+    border: var(--px) solid var(--line); box-shadow: 6px 6px 0 var(--shadow);
   }
-  a.btn.alt { background: transparent; color: var(--fg); border-color: var(--fg); }
-  a.btn:hover { opacity: .88; }
-  a.btn:active { transform: scale(.97); }
-  a.btn:focus-visible { outline: 3px solid #4d9eeb; outline-offset: 2px; }
+  a.btn.alt { background: var(--bg); color: var(--fg); }
+  a.btn:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 var(--shadow); }
+  a.btn:active { transform: translate(6px, 6px); box-shadow: 0 0 0 var(--shadow); }
+  a.btn:focus-visible { outline: var(--px) dashed #4d9eeb; outline-offset: 4px; }
 
-  #hint { margin: 0; font-size: 13px; line-height: 1.5; color: var(--muted); }
-  footer { margin-top: 28px; font-size: 12px; color: var(--muted); }
+  #hint { margin: 0; font-size: 11px; line-height: 17px; color: var(--muted); }
+  footer { margin-top: 28px; font-size: 11px; color: var(--muted); }
   footer a { color: inherit; }
 
-  @keyframes pop { from { opacity: 0; transform: scale(.85); } to { opacity: 1; transform: none; } }
+  @keyframes pop { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
   @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
   @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 </style>

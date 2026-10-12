@@ -36,3 +36,5 @@ Host/path are also in `addons/DeepLink/deep_link_plugin.gd` and
   `CharacterManager` in the game - update it when characters are added.
 - Messengers cache previews. After changing `og.png`, refresh them with the
   Kakao link debugger / Facebook Sharing Debugger.
+
+- Font: Galmuri11 (SIL OFL) Latin subset at assets/25/fonts/Galmuri11-latin.woff. Keep sizes at multiples of 11px and avoid bold/rounded corners to stay crisp. Re-subset with: python -m fontTools.subset Galmuri11.ttf --unicodes=U+0020-007E,U+00B7,U+00D7,U+2013,U+2014,U+2019 --flavor=woff --output-file=...
