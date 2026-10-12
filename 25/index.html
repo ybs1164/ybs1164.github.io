@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>25</title>
+<style>
+  body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+         justify-content: center; gap: 14px; font-family: sans-serif; background: #f2f2f2; color: #000; text-align: center; padding: 0 16px; }
+  h1 { font-size: 64px; margin: 0; }
+  a.btn { display: block; min-width: 240px; padding: 14px 20px; border-radius: 10px; background: #000; color: #f2f2f2;
+          text-decoration: none; font-size: 18px; }
+  a.btn.alt { background: transparent; color: #000; border: 2px solid #000; }
+  p { margin: 0; font-size: 13px; color: #555; max-width: 300px; }
+  @media (prefers-color-scheme: dark) {
+    body { background: #4d4d4d; color: #f2f2f2; }
+    a.btn { background: #f2f2f2; color: #000; }
+    a.btn.alt { background: transparent; color: #f2f2f2; border-color: #f2f2f2; }
+    p { color: #ccc; }
+  }
+</style>
+</head>
+<body>
+<h1>25</h1>
+<a class="btn" id="open" href="#">Play in the 25 app</a>
+<a class="btn alt" id="store" href="#">Get it on Google Play</a>
+<p id="hint">Opened inside another app (KakaoTalk, etc.) and nothing happens? Open this page in Chrome instead.</p>
+<script>
+// Shared-run link: https://ybs1164.github.io/25/?c=<character>&m=<mode>&s=<seed>
+//
+// Installed apps normally intercept this URL before the browser ever loads it
+// (Android App Links - see addons/DeepLink/deep_link_plugin.gd). This page only
+// runs when that doesn't happen: the app isn't installed, or the link was
+// opened in an in-app browser (KakaoTalk, Instagram...) that ignores App Links.
+// The intent:// URL covers both: it starts the app if installed, and otherwise
+// falls back to the Play Store.
+(function () {
+  var PACKAGE = 'com.numberer.twofive';
+  var STORE = 'https://play.google.com/store/apps/details?id=' + PACKAGE;
+  var isAndroid = /Android/i.test(navigator.userAgent);
+
+  var storeLink = document.getElementById('store');
+  var openLink = document.getElementById('open');
+  storeLink.href = STORE;
+
+  if (!isAndroid) {
+    // No Android app to open here (desktop / iOS).
+    openLink.style.display = 'none';
+    document.getElementById('hint').style.display = 'none';
+    return;
+  }
+
+  var intentUrl = 'intent://' + location.host + location.pathname + location.search +
+    '#Intent;scheme=https;package=' + PACKAGE +
+    ';S.browser_fallback_url=' + encodeURIComponent(STORE) + ';end';
+  openLink.href = intentUrl;
+
+  // Try once automatically; some in-app browsers block this without a tap,
+  // which is what the button above is for.
+  location.replace(intentUrl);
+})();
+</script>
+</body>
+</html>
