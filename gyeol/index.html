@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>결 GYEOL - 화살표 타일 보드게임</title>
+<meta name="description" content="결(GYEOL)은 양면 화살표 타일 25개로 즐기는 2인 보드게임입니다. 상대 타일을 돌리고, 내 타일을 놓고, 화살표 경로를 따라 뒤집으세요.">
+<meta name="theme-color" content="#43433c">
+<link rel="canonical" href="https://ybs1164.github.io/gyeol/">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:title" content="결 GYEOL">
+<meta property="og:description" content="양면 화살표 타일 25개로 즐기는 2인 보드게임">
+<meta property="og:url" content="https://ybs1164.github.io/gyeol/">
+<meta property="og:image" content="https://ybs1164.github.io/assets/gyeol/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="초록과 갈색의 나무 화살표 타일 위로 GYEOL 로고">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="결 GYEOL">
+<meta name="twitter:description" content="양면 화살표 타일 25개로 즐기는 2인 보드게임">
+<meta name="twitter:image" content="https://ybs1164.github.io/assets/gyeol/og.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap">
+<style>
+  /* Colors sampled from the GYEOL poster renders: charcoal table, cream type,
+     green / terracotta tile faces. */
+  :root {
+    color-scheme: light dark;
+    --table: #43433c;
+    --cream: #f1ebdc;
+    --green: #3f9d4a;
+    --terra: #b8532f;
+    --bg: #f4f2ec;
+    --fg: #2c2c28;
+    --muted: #6b6a62;
+    --rule: #d9d5ca;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #2b2b27; --fg: #ece7da; --muted: #a8a495; --rule: #45443d; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    font-size: 17px; line-height: 1.7; word-break: keep-all;
+  }
+  img { display: block; max-width: 100%; height: auto; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  /* Hero: the poster render already carries the GYEOL wordmark. */
+  .hero { background: var(--table); }
+  .hero img { width: 100%; max-width: 1800px; margin: 0 auto; }
+  .intro {
+    background: var(--table); color: var(--cream); text-align: center;
+    padding: 8px 16px 56px;
+  }
+  .intro p { margin: 0 auto; max-width: 32em; }
+  .intro .ko { font-size: 15px; letter-spacing: .6em; text-indent: .6em; opacity: .75; margin-bottom: 14px; }
+  .chips { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin-top: 24px; padding: 0; list-style: none; }
+  .chips li { border: 1px solid rgba(241,235,220,.35); border-radius: 999px; padding: 4px 14px; font-size: 14px; }
+
+  main { max-width: 1040px; margin: 0 auto; padding: 72px 16px 40px; }
+  .eyebrow { text-align: center; font-size: 13px; letter-spacing: .5em; text-indent: .5em; color: var(--muted); margin: 0 0 8px; }
+  main > h2 { text-align: center; font-size: 28px; margin: 0 0 56px; letter-spacing: .02em; }
+
+  section { padding: 48px 0; border-top: 1px solid var(--rule); }
+  section h3 { font-size: 22px; margin: 0 0 28px; display: flex; align-items: baseline; gap: 12px; }
+  section h3 span { font-size: 15px; color: var(--muted); font-weight: 400; font-variant-numeric: tabular-nums; }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px 48px; }
+  figure { margin: 0; display: flex; flex-direction: column; gap: 16px; }
+  /* Every step render draws a tile at ~122px, so one shared scale keeps tiles
+     the same size across all figures. --w is each image's natural width. */
+  main { --k: calc(52 / 122); }
+  @media (max-width: 480px) { main { --k: calc(44 / 122); } }
+  figure .art { flex: 1; display: flex; align-items: center; justify-content: center; }
+  figure .art img { width: calc(var(--w) * var(--k) * 1px); }
+  figure.wide { grid-column: 1 / -1; }
+  figcaption { margin: 0 auto; max-width: 30em; text-align: center; }
+
+  footer { text-align: center; color: var(--muted); font-size: 14px; padding: 32px 16px 56px; }
+  footer a { color: inherit; }
+</style>
+</head>
+<body>
+<header>
+  <div class="hero">
+    <picture>
+      <source media="(max-width: 700px)" srcset="/assets/gyeol/hero-tall.webp" width="1000" height="1414">
+      <img src="/assets/gyeol/hero-wide.webp" width="2400" height="800" alt="초록과 갈색의 나무 화살표 타일이 놓인 탁자 위로 GYEOL 로고">
+    </picture>
+  </div>
+  <div class="intro">
+    <h1 class="sr-only">결 GYEOL</h1>
+    <p class="ko" aria-hidden="true">결</p>
+    <p>양면의 색이 다른 화살표 타일 25개.<br>상대의 타일을 돌리고, 내 타일을 놓아 결을 바꾸세요.</p>
+    <ul class="chips">
+      <li>2인</li>
+      <li>타일 25개</li>
+      <li>5×5</li>
+    </ul>
+  </div>
+</header>
+
+<main>
+  <p class="eyebrow">RULE BOOK</p>
+  <h2>게임 방법</h2>
+
+  <section>
+    <h3><span>01</span>구성품</h3>
+    <div class="steps">
+      <figure>
+        <div class="art"><img src="/assets/gyeol/setting.webp" width="683" height="457" style="--w:683" loading="lazy" alt="앞면과 뒷면 색이 다른 화살표 타일 다섯 묶음"></div>
+        <figcaption>화살표가 있고 양면의 색이 다른 사각형 타일 25개를 준비합니다.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section>
+    <h3><span>02</span>초기 배치</h3>
+    <div class="steps">
+      <figure>
+        <div class="art"><img src="/assets/gyeol/first.webp" width="350" height="230" style="--w:350" loading="lazy" alt="서로 마주보는 초록 타일과 갈색 타일"></div>
+        <figcaption>타일 두 개를 다른 색으로 마주보게 둡니다.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section>
+    <h3><span>03</span>목표</h3>
+    <div class="steps">
+      <figure>
+        <div class="art"><img src="/assets/gyeol/goal.webp" width="662" height="662" style="--w:662" loading="lazy" alt="25개의 타일이 모두 놓인 5×5 판, 초록 타일이 더 많음"></div>
+        <figcaption>타일 25개를 모두 놓았을 때 자신의 돌이 더 많으면 승리합니다.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section>
+    <h3><span>04</span>행동</h3>
+    <div class="steps">
+      <figure>
+        <div class="art"><img src="/assets/gyeol/do.webp" width="618" height="492" style="--w:618" loading="lazy" alt="① 상대 타일을 돌리고 ② 그 옆에 내 타일을 놓는 모습"></div>
+        <figcaption>자신의 차례에 돌리기와 놓기를 차례로 진행합니다.</figcaption>
+      </figure>
+      <figure>
+        <div class="art"><img src="/assets/gyeol/turnoff.webp" width="663" height="662" style="--w:663" loading="lazy" alt="빈 칸에 X 표시가 된 5×5 판"></div>
+        <figcaption>두 행동을 한 번에 진행할 수 없다면 상대에게 차례를 넘깁니다.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section>
+    <h3><span>05</span>돌리기</h3>
+    <div class="steps">
+      <figure>
+        <div class="art"><img src="/assets/gyeol/turn.webp" width="481" height="519" style="--w:481" loading="lazy" alt="갈색 타일 하나를 돌리는 모습"></div>
+        <figcaption>상대의 타일 하나를 골라 동서남북 중 한 곳으로 돌립니다.</figcaption>
+      </figure>
+      <figure>
+        <div class="art"><img src="/assets/gyeol/turnlimit.webp" width="475" height="559" style="--w:475" loading="lazy" alt="위쪽 방향에 X 표시가 된 위를 향한 타일"></div>
+        <figcaption>기존에 바라보던 방향으로는 돌리지 못합니다.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section>
+    <h3><span>06</span>놓기</h3>
+    <div class="steps">
+      <figure>
+        <div class="art"><img src="/assets/gyeol/put.webp" width="610" height="402" style="--w:610" loading="lazy" alt="돌린 타일 옆의 빈 칸 두 곳이 점선으로 표시됨"></div>
+        <figcaption>돌린 타일에서 동서남북으로 인접한 빈 칸 하나를 골라 자신의 타일을 놓습니다.</figcaption>
+      </figure>
+      <figure>
+        <div class="art"><img src="/assets/gyeol/setdirection.webp" width="600" height="442" style="--w:600" loading="lazy" alt="새로 놓은 타일 주위에 네 방향 표시"></div>
+        <figcaption>타일의 방향은 동서남북 중 하나로 정합니다.</figcaption>
+      </figure>
+      <figure class="wide">
+        <div class="art"><img src="/assets/gyeol/fivelimit.webp" width="908" height="142" style="--w:908" loading="lazy" alt="타일 다섯 개가 놓인 줄의 양 끝에 X 표시"></div>
+        <figcaption>하나의 줄에 5개의 타일이 놓였다면 그 줄에는 타일을 놓을 수 없습니다.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section>
+    <h3><span>07</span>먹기</h3>
+    <div class="steps">
+      <figure>
+        <div class="art"><img src="/assets/gyeol/follow.webp" width="489" height="392" style="--w:489" loading="lazy" alt="초록 타일에서 시작해 갈색 타일들의 화살표를 따라가는 경로"></div>
+        <figcaption>자신이 놓은 타일이 상대 타일을 바라보고 있다면, 상대 타일이 바라보는 경로대로 계속 따라갑니다.</figcaption>
+      </figure>
+      <figure>
+        <div class="art"><img src="/assets/gyeol/swap.webp" width="489" height="432" style="--w:489" loading="lazy" alt="경로 위의 갈색 타일들이 초록으로 뒤집히는 모습"></div>
+        <figcaption>마지막 상대 타일이 자신의 타일을 바라본다면 그 경로 사이의 모든 상대 타일을 뒤집습니다.</figcaption>
+      </figure>
+      <figure>
+        <div class="art"><img src="/assets/gyeol/notfollow.webp" width="359" height="271" style="--w:359" loading="lazy" alt="경로가 시작한 타일로 돌아와 X 표시됨"></div>
+        <figcaption>단, 자신의 타일은 시작한 타일이 아니어야 합니다.</figcaption>
+      </figure>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>결 GYEOL · <a href="/">ybs1164</a></p>
+</footer>
+</body>
+</html>
