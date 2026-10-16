@@ -19,7 +19,7 @@ self.onmessage=async({data:{id,path,body={}}})=>{
       let a,extra={};
       if(path==='/api/ai'){
         const canon=b.map(v=>v*p);
-        a=await search(canon,Math.max(2,Math.min(2000,body.sims||200)),predict);
+        a=await search(canon,50,predict);
         extra={aiMove:decode(a),aiValue:(await predict(canon)).value};
       }else if(path==='/api/move'){
         a=legal(b,p).find(a=>JSON.stringify(decode(a))===JSON.stringify(body.move));

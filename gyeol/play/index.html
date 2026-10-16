@@ -67,6 +67,12 @@
     user-select: none; touch-action: manipulation;
   }
   .cell { position: relative; width: var(--cell); height: var(--cell); padding: 3px; }
+  @media (max-width: 600px) {
+    :root { --cell: min(72px, calc((100vw - 34px) / 7)); }
+    body { padding-left: 10px; padding-right: 10px; }
+    .board { padding: 6px; }
+    .cell { padding: 2px; }
+  }
   .cell.target::before {
     content: ""; position: absolute; inset: 5px; border-radius: 10px;
     border: 2px dashed var(--green); background: var(--target); cursor: pointer;
@@ -125,11 +131,6 @@
     <select id="side" aria-label="내 색">
       <option value="1">나: 초록 (선공)</option>
       <option value="-1">나: 갈색 (후공)</option>
-    </select>
-    <select id="sims" aria-label="AI 강도">
-      <option value="50">AI: 빠름 (50)</option>
-      <option value="200" selected>AI: 보통 (200)</option>
-      <option value="800">AI: 강함 (800)</option>
     </select>
     <button class="primary" id="newBtn">새 게임</button>
     <button id="cancelBtn" disabled>선택 취소</button>
@@ -340,7 +341,7 @@ async function maybeAI() {
   while (S && !S.ended && S.player !== human) {
     const id = gameId;
     busy = true; render();
-    const next = await api('/api/ai', { board: S.board, player: S.player, sims: +$('sims').value });
+    const next = await api('/api/ai', { board: S.board, player: S.player });
     if (id !== gameId) return;
     S = next; last = next.last; animate = next.last;
     const pct = Math.round((next.aiValue + 1) * 50);

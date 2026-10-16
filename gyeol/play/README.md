@@ -1,6 +1,6 @@
 # 결 AI 대국
 
-`/gyeol/play/`에서 실행되는 정적 웹 게임입니다. 원본 `gyeol_ai/web/index.html`의 화면과 조작, 게임 규칙, AlphaZero MCTS(50/200/800회, cpuct 1.5)를 유지합니다. 별도 Python 서버 없이 Web Worker에서 ONNX Runtime Web 1.24.3으로 추론합니다.
+`/gyeol/play/`에서 실행되는 정적 웹 게임입니다. 원본 `gyeol_ai/web/index.html`의 조작과 게임 규칙을 유지하며, 모바일에서는 타일을 조금 더 크게 표시합니다. AlphaZero MCTS는 50회(cpuct 1.5)로 고정합니다. 별도 Python 서버 없이 Web Worker에서 ONNX Runtime Web 1.24.3으로 추론합니다.
 
 `model.onnx`는 2026-10-16의 `gyeol_ai/temp/best.pth.tar`를 ONNX opset 17로 변환한 모델입니다. 원본 체크포인트의 SHA-256은 `model-info.json`에 기록했습니다. 이후 학습 결과는 자동 반영되지 않으며 모델을 다시 내보내야 합니다.
 
