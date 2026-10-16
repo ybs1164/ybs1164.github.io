@@ -4,7 +4,7 @@ ort.env.wasm.numThreads=1;
 ort.env.wasm.wasmPaths=new URL('./vendor/',import.meta.url).href;
 let session;
 async function predict(b){
-  session??=ort.InferenceSession.create(new URL('./model.onnx?v=a96bec8c5e875027',import.meta.url).href,{executionProviders:['wasm']});
+  session??=ort.InferenceSession.create(new URL('./model.onnx?v=e8b802c626a0d038',import.meta.url).href,{executionProviders:['wasm']});
   const net=await session;
   const out=await net.run({board:new ort.Tensor('float32',Float32Array.from(b),[1,7,7])});
   return {policy:Array.from(out.log_policy.data,Math.exp),value:out.value.data[0]};
