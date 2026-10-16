@@ -120,7 +120,6 @@
 <main>
   <a href="../" style="color:var(--muted);font-size:13px;display:inline-block;margin-bottom:12px">← 결 소개</a>
   <h1>결 GYEOL</h1>
-  <div class="sub">학습된 AlphaZero 신경망과 대국하기 · 첫 AI 차례에는 모델을 불러옵니다</div>
 
   <div class="controls">
     <select id="side" aria-label="내 색">
@@ -145,13 +144,6 @@
 
   <div class="board-wrap"><div class="board" id="board"></div></div>
 
-  <div class="help">
-    <b>내 차례</b> ① 테두리가 빛나는 <b>상대 타일</b>을 누르고 ② 돌릴 방향을 고릅니다 (원래 방향 제외)
-    ③ 그 타일 옆의 <b>빈 칸</b>을 누르고 ④ 내 타일의 방향을 고르면 둡니다.<br>
-    놓은 타일이 상대 타일을 바라보면 화살표를 따라가고, 시작한 타일이 아닌 내 타일에 닿으면 사이의 상대 타일이 모두 뒤집힙니다.
-    판은 가로·세로 5칸을 넘을 수 없고, 25개를 모두 놓았을 때 많은 쪽이 이깁니다.
-    <div class="warn" id="modelWarn"></div>
-  </div>
 </main>
 
 <script>
@@ -295,7 +287,6 @@ function renderStatus(extra) {
   $('nameB').textContent = '갈색 · ' + (human === -1 ? '나' : 'AI');
   $('sideG').classList.toggle('turn', !S.ended && S.player === 1);
   $('sideB').classList.toggle('turn', !S.ended && S.player === -1);
-  $('modelWarn').textContent = '';
 
   const st = $('status');
   if (S.ended) {
