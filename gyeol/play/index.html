@@ -18,7 +18,7 @@
     --arrow: #ece4d3;
     --accent: #d9a441;
     --target: rgba(63, 143, 71, .18);
-    --cell: min(72px, calc((100vw - 48px) / 7));
+    --cell: min(70px, calc((100vw - 102px) / 7));
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
@@ -60,7 +60,21 @@
   .spinner { width: 16px; height: 16px; border: 2px solid var(--line); border-top-color: var(--ink); border-radius: 50%; animation: spin .8s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  .board-wrap { display: flex; justify-content: center; }
+  .board-wrap { display: flex; justify-content: center; gap: 10px; align-items: stretch; }
+  .advantage {
+    width: 36px; flex: none; position: relative; display: flex; flex-direction: column;
+    overflow: hidden; border: 1px solid var(--line); border-radius: 10px;
+    font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; color: #fff;
+  }
+  .advantage::after {
+    content: ""; position: absolute; top: 50%; left: 0; right: 0;
+    border-top: 1px solid rgba(255,255,255,.65); pointer-events: none;
+  }
+  .advantage-part { display: flex; justify-content: center; min-height: 0; transition: flex-grow .3s ease; }
+  .advantage-part.g { background: var(--green); flex: 1; align-items: flex-start; padding-top: 10px; }
+  .advantage-part.b { background: var(--brown); flex: 1; align-items: flex-end; padding-bottom: 10px; }
+  .advantage-part span { z-index: 1; }
+  .advantage-even { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--panel); color: var(--ink); border-radius: 4px; padding: 2px 4px; z-index: 1; }
   .board {
     display: grid; grid-template-columns: repeat(7, var(--cell)); grid-template-rows: repeat(7, var(--cell));
     gap: 0; padding: 10px; border-radius: 14px; background: var(--panel); border: 1px solid var(--line);
@@ -68,8 +82,10 @@
   }
   .cell { position: relative; width: var(--cell); height: var(--cell); padding: 3px; }
   @media (max-width: 600px) {
-    :root { --cell: min(72px, calc((100vw - 34px) / 7)); }
+    :root { --cell: min(70px, calc((100vw - 76px) / 7)); }
     body { padding-left: 10px; padding-right: 10px; }
+    .board-wrap { gap: 8px; }
+    .advantage { width: 34px; }
     .board { padding: 6px; }
     .cell { padding: 2px; }
   }
@@ -143,7 +159,14 @@
 
   <div class="status" id="status"></div>
 
-  <div class="board-wrap"><div class="board" id="board"></div></div>
+  <div class="board-wrap">
+    <div class="advantage" id="advantage" role="img" aria-label="타일 수 동률" title="현재 타일 수 차이">
+      <div class="advantage-part g" id="advantageG"><span id="leadG"></span></div>
+      <div class="advantage-part b" id="advantageB"><span id="leadB"></span></div>
+      <span class="advantage-even" id="leadEven">0</span>
+    </div>
+    <div class="board" id="board"></div>
+  </div>
 
 </main>
 
@@ -282,6 +305,18 @@ function picker(dirs, onPick) {
 
 function renderStatus(extra) {
   if (!S) return;
+  const difference = S.green - S.brown;
+  const total = S.green + S.brown;
+  // Keep a small visible area for both colors, including a zero-tile side.
+  const greenShare = total ? Math.max(.05, Math.min(.95, S.green / total)) : .5;
+  $('advantageG').style.flexGrow = greenShare;
+  $('advantageB').style.flexGrow = 1 - greenShare;
+  $('leadG').textContent = difference > 0 ? `+${difference}` : '';
+  $('leadB').textContent = difference < 0 ? `+${-difference}` : '';
+  $('leadEven').hidden = difference !== 0;
+  const advantageText = difference === 0 ? '타일 수 동률' : `${difference > 0 ? '초록' : '갈색'} ${Math.abs(difference)}타일 유리`;
+  $('advantage').setAttribute('aria-label', advantageText);
+  $('advantage').title = `현재 판: ${advantageText}`;
   $('numG').textContent = S.green;
   $('numB').textContent = S.brown;
   $('nameG').textContent = '초록 · ' + (human === 1 ? '나' : 'AI');
@@ -344,8 +379,7 @@ async function maybeAI() {
     const next = await api('/api/ai', { board: S.board, player: S.player });
     if (id !== gameId) return;
     S = next; last = next.last; animate = next.last;
-    const pct = Math.round((next.aiValue + 1) * 50);
-    aiNote = next.aiMove.length ? `AI 예상 승률 ${pct}%` : 'AI가 패스했습니다.';
+    aiNote = next.aiMove.length ? '' : 'AI가 패스했습니다.';
   }
 }
 
