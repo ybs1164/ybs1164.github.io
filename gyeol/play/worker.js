@@ -1,5 +1,5 @@
 import * as ort from './vendor/ort.wasm.min.mjs';
-import {initial,legal,decode,apply,payload,search,result} from './engine.js';
+import {initial,legal,decode,apply,payload,search,result,estimateTiles} from './engine.js';
 ort.env.wasm.numThreads=1;
 ort.env.wasm.wasmPaths=new URL('./vendor/',import.meta.url).href;
 let session;
@@ -12,7 +12,8 @@ async function predict(b){
 self.onmessage=async({data:{id,path,body={}}})=>{
   try{
     let out;
-    if(path==='/api/new')out=payload(initial(),1);
+    if(path==='/api/evaluate')out=await estimateTiles(body.board.flat(),body.player,predict);
+    else if(path==='/api/new')out=payload(initial(),1);
     else {
       const b=body.board.flat(),p=body.player;
       if(result(b,p))throw Error('이미 끝난 게임입니다.');

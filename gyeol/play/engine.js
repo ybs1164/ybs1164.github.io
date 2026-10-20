@@ -64,3 +64,46 @@ export async function search(board,sims,predict) {
   const edges=tree.get(board.join(',')).edges,max=Math.max(...edges.map(e=>e.n)),best=edges.filter(e=>e.n===max);
   return best[Math.floor(Math.random()*best.length)].a;
 }
+
+// Estimate final tile margin by completing games with the trained policy.
+// Unlike the value head (win/loss), terminal margins have actual tile units.
+export async function estimateTiles(board,player,predict,samples=12) {
+  const margin=b=>b.reduce((sum,v)=>sum+Math.sign(v),0);
+  if(result(board,player))return {tiles:margin(board),samples:0,exact:true};
+  let seed=2166136261;
+  for(const v of [...board,player])seed=Math.imul(seed^(v+5),16777619)>>>0;
+  function random(){
+    seed=(seed+0x6D2B79F5)>>>0;
+    let t=Math.imul(seed^(seed>>>15),1|seed);
+    t^=t+Math.imul(t^(t>>>7),61|t);
+    return ((t^(t>>>14))>>>0)/4294967296;
+  }
+  const cache=new Map(),margins=[];
+  for(let sample=0;sample<samples;sample++){
+    let b=board.slice(),p=player;
+    for(let ply=0;!result(b,p);ply++){
+      if(ply>=50)throw Error('Tile evaluation did not reach a terminal position.');
+      const canon=b.map(v=>v*p),actions=legal(canon,1);
+      let a=actions[0];
+      if(actions.length>1){
+        const key=canon.join(',');
+        let weights=cache.get(key);
+        if(!weights){
+          const {policy}=await predict(canon);
+          // Use the learned policy directly; no invented win-to-tile conversion.
+          weights=actions.map(action=>Math.max(0,policy[action]||0));
+          cache.set(key,weights);
+        }
+        const total=weights.reduce((sum,w)=>sum+w,0);
+        if(total>0){
+          let draw=random()*total;
+          a=actions[actions.length-1];
+          for(let i=0;i<actions.length;i++)if((draw-=weights[i])<0){a=actions[i];break;}
+        }else a=actions[Math.floor(random()*actions.length)];
+      }
+      b=apply(b,p,a).board;p=-p;
+    }
+    margins.push(margin(b));
+  }
+  return {tiles:margins.reduce((sum,v)=>sum+v,0)/samples,samples,exact:false};
+}
