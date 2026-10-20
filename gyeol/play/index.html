@@ -160,10 +160,10 @@
   <div class="status" id="status"></div>
 
   <div class="board-wrap">
-    <div class="advantage" id="advantage" role="img" aria-label="타일 수 동률" title="현재 타일 수 차이">
+    <div class="advantage" id="advantage" role="img" aria-label="AI 평가 대기 중" title="AI 평가를 타일 수로 환산한 추정 우세">
       <div class="advantage-part g" id="advantageG"><span id="leadG"></span></div>
       <div class="advantage-part b" id="advantageB"><span id="leadB"></span></div>
-      <span class="advantage-even" id="leadEven">0</span>
+      <span class="advantage-even" id="leadEven">…</span>
     </div>
     <div class="board" id="board"></div>
   </div>
@@ -182,6 +182,7 @@ let sel = {};          // {r, c, nd, pr, pc}
 let last = null;       // 직전 수 표시 정보
 let animate = null;    // {placed, flipped}
 let gameId = 0;
+let aiGreenValue = null; // Latest AI value, signed from green's perspective.
 
 function arrowSVG(dir) {
   return `<svg viewBox="0 0 100 100" aria-hidden="true"><g style="transform: rotate(${dir * 90}deg)">
@@ -305,18 +306,20 @@ function picker(dirs, onPick) {
 
 function renderStatus(extra) {
   if (!S) return;
-  const difference = S.green - S.brown;
-  const total = S.green + S.brown;
-  // Keep a small visible area for both colors, including a zero-tile side.
-  const greenShare = total ? Math.max(.05, Math.min(.95, S.green / total)) : .5;
+  // Linear display conversion: (2 * win probability - 1) * 25 tiles.
+  // This is an estimate in tile units, not a prediction of the final tile count.
+  const value = aiGreenValue ?? 0;
+  const difference = Math.round(value * 25 * 10) / 10;
+  const greenShare = Math.max(.05, Math.min(.95, (value + 1) / 2));
   $('advantageG').style.flexGrow = greenShare;
   $('advantageB').style.flexGrow = 1 - greenShare;
   $('leadG').textContent = difference > 0 ? `+${difference}` : '';
   $('leadB').textContent = difference < 0 ? `+${-difference}` : '';
   $('leadEven').hidden = difference !== 0;
-  const advantageText = difference === 0 ? '타일 수 동률' : `${difference > 0 ? '초록' : '갈색'} ${Math.abs(difference)}타일 유리`;
+  $('leadEven').textContent = aiGreenValue === null ? '…' : '0';
+  const advantageText = aiGreenValue === null ? 'AI 평가 대기 중' : difference === 0 ? 'AI 평가상 대등' : `${difference > 0 ? '초록' : '갈색'} 약 ${Math.abs(difference)}타일 유리`;
   $('advantage').setAttribute('aria-label', advantageText);
-  $('advantage').title = `현재 판: ${advantageText}`;
+  $('advantage').title = `${advantageText} (AI 평가를 25타일 기준으로 선형 환산)`;
   $('numG').textContent = S.green;
   $('numB').textContent = S.brown;
   $('nameG').textContent = '초록 · ' + (human === 1 ? '나' : 'AI');
@@ -378,6 +381,7 @@ async function maybeAI() {
     busy = true; render();
     const next = await api('/api/ai', { board: S.board, player: S.player });
     if (id !== gameId) return;
+    aiGreenValue = Number.isFinite(next.aiValue) ? Math.max(-1, Math.min(1, next.aiValue)) * -human : null;
     S = next; last = next.last; animate = next.last;
     aiNote = next.aiMove.length ? '' : 'AI가 패스했습니다.';
   }
@@ -387,7 +391,7 @@ async function newGame() {
   const id = ++gameId;
   resetWorker();
   human = +$('side').value;
-  sel = {}; last = null; aiNote = ''; busy = true;
+  sel = {}; last = null; aiNote = ''; aiGreenValue = null; busy = true;
   try {
     const next = await api('/api/new');
     if (id !== gameId) return;
