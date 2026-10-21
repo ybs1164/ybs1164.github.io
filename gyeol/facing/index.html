@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>결 vs AI · 마주보기 규칙</title>
+<style>
+  :root {
+    --bg: #f3efe7;
+    --panel: #fbf8f2;
+    --ink: #3b3a36;
+    --muted: #8a857a;
+    --line: #ddd5c6;
+    --green: #3f8f47;
+    --green-dark: #2f6f36;
+    --brown: #a8532f;
+    --brown-dark: #7f3d22;
+    --arrow: #ece4d3;
+    --accent: #d9a441;
+    --target: rgba(63, 143, 71, .18);
+    --cell: min(70px, calc((100vw - 102px) / 7));
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1e1d1b; --panel: #282724; --ink: #ebe6dc; --muted: #9c968a; --line: #3d3a35;
+      --target: rgba(120, 200, 128, .2);
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+    display: flex; justify-content: center; padding: 24px 16px 40px;
+  }
+  main { width: 100%; max-width: 560px; }
+  h1 { font-size: 22px; letter-spacing: .5em; margin: 0 0 4px; font-weight: 700; }
+  .sub { color: var(--muted); font-size: 13px; margin-bottom: 18px; }
+
+  .controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 14px; }
+  select, button {
+    font: inherit; font-size: 14px; color: var(--ink); background: var(--panel);
+    border: 1px solid var(--line); border-radius: 8px; padding: 7px 12px; cursor: pointer;
+  }
+  button.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  button:disabled { opacity: .45; cursor: default; }
+
+  .score { display: flex; gap: 10px; margin-bottom: 12px; }
+  .side {
+    flex: 1; display: flex; align-items: center; gap: 10px; padding: 10px 12px;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    transition: box-shadow .2s, border-color .2s;
+  }
+  .side.turn { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent) inset; }
+  .chip { width: 22px; height: 22px; border-radius: 5px; flex: none; }
+  .chip.g { background: var(--green); } .chip.b { background: var(--brown); }
+  .side .name { font-size: 13px; color: var(--muted); }
+  .side .num { font-size: 22px; font-weight: 700; margin-left: auto; font-variant-numeric: tabular-nums; }
+
+  .status { min-height: 44px; font-size: 15px; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .spinner { width: 16px; height: 16px; border: 2px solid var(--line); border-top-color: var(--ink); border-radius: 50%; animation: spin .8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .board-wrap { display: flex; justify-content: center; gap: 10px; align-items: stretch; }
+  .advantage {
+    width: 36px; flex: none; position: relative; display: flex; flex-direction: column;
+    overflow: hidden; border: 1px solid var(--line); border-radius: 10px;
+    font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; color: #fff;
+  }
+  .advantage::after {
+    content: ""; position: absolute; top: 50%; left: 0; right: 0;
+    border-top: 1px solid rgba(255,255,255,.65); pointer-events: none;
+  }
+  .advantage-part { display: flex; justify-content: center; min-height: 0; transition: flex-grow .3s ease; }
+  .advantage-part.g { background: var(--green); flex: 1; align-items: flex-start; padding-top: 10px; }
+  .advantage-part.b { background: var(--brown); flex: 1; align-items: flex-end; padding-bottom: 10px; }
+  .advantage-part span { z-index: 1; }
+  .advantage-even { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--panel); color: var(--ink); border-radius: 4px; padding: 2px 4px; z-index: 1; }
+  .board {
+    display: grid; grid-template-columns: repeat(7, var(--cell)); grid-template-rows: repeat(7, var(--cell));
+    gap: 0; padding: 10px; border-radius: 14px; background: var(--panel); border: 1px solid var(--line);
+    user-select: none; touch-action: manipulation;
+  }
+  .cell { position: relative; width: var(--cell); height: var(--cell); padding: 3px; }
+  @media (max-width: 600px) {
+    :root { --cell: min(70px, calc((100vw - 76px) / 7)); }
+    body { padding-left: 10px; padding-right: 10px; }
+    .board-wrap { gap: 8px; }
+    .advantage { width: 34px; }
+    .board { padding: 6px; }
+    .cell { padding: 2px; }
+  }
+  .cell.target::before {
+    content: ""; position: absolute; inset: 5px; border-radius: 10px;
+    border: 2px dashed var(--green); background: var(--target); cursor: pointer;
+  }
+  .cell.target.mine-b::before { border-color: var(--brown); background: rgba(168, 83, 47, .15); }
+
+  .tile {
+    width: 100%; height: 100%; border-radius: 10px; position: relative;
+    box-shadow: 0 2px 0 rgba(0,0,0,.18), 0 3px 8px rgba(0,0,0,.12);
+    transition: transform .25s;
+  }
+  .tile.g { background: var(--green); } .tile.b { background: var(--brown); }
+  .tile svg { width: 100%; height: 100%; display: block; }
+  .tile svg g { transition: transform .3s; transform-origin: 50px 50px; }
+  .tile.pickable { cursor: pointer; }
+  .tile.pickable:hover { transform: translateY(-3px); }
+  .tile.pickable::after {
+    content: ""; position: absolute; inset: -3px; border-radius: 12px; border: 2px solid var(--accent);
+    opacity: .75; pointer-events: none;
+  }
+  .tile.selected { transform: rotate(-8deg) scale(1.05); z-index: 2; }
+  .tile.ghost { opacity: .55; }
+  .tile.last-place::after, .tile.last-rotate::after {
+    content: ""; position: absolute; inset: -3px; border-radius: 12px; pointer-events: none;
+    border: 2px solid var(--ink); opacity: .6;
+  }
+  .tile.last-rotate::after { border-style: dashed; }
+  .tile.flip { animation: flip .5s ease; }
+  @keyframes flip { 0% { transform: rotateY(0) } 50% { transform: rotateY(90deg) } 100% { transform: rotateY(0) } }
+  .tile.pop { animation: pop .3s ease; }
+  @keyframes pop { 0% { transform: scale(.6); opacity: 0 } 100% { transform: scale(1); opacity: 1 } }
+
+  /* 방향 고르기 */
+  .picker { position: absolute; inset: 0; z-index: 5; }
+  .picker button {
+    position: absolute; width: 44%; height: 44%; padding: 0; border-radius: 50%;
+    background: var(--ink); color: var(--bg); border: 2px solid var(--bg); font-size: 15px; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,.3);
+  }
+  .picker button:hover { background: var(--accent); color: #222; }
+  .picker .d0 { left: 28%; top: -22%; } .picker .d1 { right: -22%; top: 28%; }
+  .picker .d2 { left: 28%; bottom: -22%; } .picker .d3 { left: -22%; top: 28%; }
+
+  .help { margin-top: 18px; font-size: 13px; color: var(--muted); line-height: 1.7; }
+  .help b { color: var(--ink); font-weight: 600; }
+  .warn { color: var(--brown); font-size: 13px; }
+</style>
+</head>
+<body>
+<main>
+  <a href="../" style="color:var(--muted);font-size:13px;display:inline-block;margin-bottom:12px">← 결 소개</a>
+  <h1>결 GYEOL</h1>
+  <p class="sub">마주보기 규칙 · 새 타일은 방금 돌린 타일을 바라봅니다.</p>
+
+  <div class="controls">
+    <select id="side" aria-label="내 색">
+      <option value="1">나: 초록 (선공)</option>
+      <option value="-1">나: 갈색 (후공)</option>
+    </select>
+    <button class="primary" id="newBtn">새 게임</button>
+    <button id="cancelBtn" disabled>선택 취소</button>
+  </div>
+
+  <div class="score">
+    <div class="side" id="sideG"><div class="chip g"></div><div><div class="name" id="nameG">초록</div></div><div class="num" id="numG">1</div></div>
+    <div class="side" id="sideB"><div class="chip b"></div><div><div class="name" id="nameB">갈색</div></div><div class="num" id="numB">1</div></div>
+  </div>
+
+  <div class="status" id="status"></div>
+
+  <div class="board-wrap">
+    <div class="advantage" id="advantage" role="img" aria-label="AI 평가 대기 중" title="AI 가상 대국의 예상 최종 타일 차이">
+      <div class="advantage-part g" id="advantageG"><span id="leadG"></span></div>
+      <div class="advantage-part b" id="advantageB"><span id="leadB"></span></div>
+      <span class="advantage-even" id="leadEven">…</span>
+    </div>
+    <div class="board" id="board"></div>
+  </div>
+
+</main>
+
+<script>
+const N = 7;
+const ARROW = ['↑', '→', '↓', '←'];
+const $ = id => document.getElementById(id);
+
+let S = null;          // 서버에서 받은 상태
+let human = 1;
+let busy = false;
+let sel = {};          // {r, c, nd, pr, pc}
+let last = null;       // 직전 수 표시 정보
+let animate = null;    // {placed, flipped}
+let gameId = 0;
+let tileEvaluation = null;
+let evaluationWorker, evaluationVersion = 0, evaluationBusy = false, queuedEvaluation = null;
+
+function sendEvaluation() {
+  if (evaluationBusy || !queuedEvaluation) return;
+  evaluationBusy = true;
+  evaluationWorker.postMessage(queuedEvaluation);
+  queuedEvaluation = null;
+}
+
+function evaluatePosition() {
+  const id = ++evaluationVersion;
+  tileEvaluation = S.ended ? {tiles: S.green - S.brown, exact: true} : null;
+  queuedEvaluation = null;
+  if (S.ended) return;
+  queuedEvaluation = {id, path: '/api/evaluate', body: {board: S.board, player: S.player}};
+  sendEvaluation();
+}
+
+function arrowSVG(dir) {
+  return `<svg viewBox="0 0 100 100" aria-hidden="true"><g style="transform: rotate(${dir * 90}deg)">
+    <path d="M50 14 L80 46 L63 46 L63 86 L50 76 L37 86 L37 46 L20 46 Z" fill="var(--arrow)"
+      stroke="rgba(0,0,0,.35)" stroke-width="3" stroke-linejoin="round"/></g></svg>`;
+}
+
+let worker, requestId = 0;
+const pending = new Map();
+function resetWorker() {
+  worker?.terminate();
+  evaluationWorker?.terminate();
+  evaluationVersion++;
+  evaluationBusy = false; queuedEvaluation = null; tileEvaluation = null;
+  evaluationWorker = new Worker('./worker.js', {type: 'module'});
+  evaluationWorker.onmessage = ({data: {id, data, error}}) => {
+    evaluationBusy = false;
+    if (id === evaluationVersion) {
+      tileEvaluation = error ? {error: true} : data;
+      renderAdvantage();
+    }
+    sendEvaluation();
+  };
+  evaluationWorker.onerror = () => {
+    evaluationBusy = false; queuedEvaluation = null;
+    tileEvaluation = {error: true};
+    renderAdvantage();
+  };
+  for (const {reject} of pending.values()) reject(new Error('새 게임을 시작했습니다.'));
+  pending.clear();
+  worker = new Worker('./worker.js', {type: 'module'});
+  worker.onmessage = ({data: {id, data, error}}) => {
+    const request = pending.get(id); if (!request) return;
+    pending.delete(id); error ? request.reject(new Error(error)) : request.resolve(data);
+  };
+  worker.onerror = () => {
+    for (const {reject} of pending.values()) reject(new Error('AI를 불러오지 못했습니다. 새 게임으로 다시 시도해 주세요.'));
+    pending.clear();
+  };
+}
+function api(path, body) {
+  return new Promise((resolve, reject) => {
+    const id = ++requestId; pending.set(id, {resolve, reject});
+    worker.postMessage({id, path, body});
+  });
+}
+
+function movesFiltered() {
+  if (!S || S.ended || S.player !== human) return [];
+  return S.moves.filter(m => m.length &&
+    (sel.r === undefined || (m[0] === sel.r && m[1] === sel.c)) &&
+    (sel.nd === undefined || m[2] === sel.nd) &&
+    (sel.pr === undefined || (m[3] === sel.pr && m[4] === sel.pc)));
+}
+
+function phase() {
+  if (sel.r === undefined) return 'rotate';
+  if (sel.nd === undefined) return 'rotateDir';
+  return 'place';
+}
+
+function render() {
+  const board = $('board');
+  board.innerHTML = '';
+  const ms = movesFiltered();
+  const ph = phase();
+  const myTurn = S && !S.ended && S.player === human && !busy;
+  const key = (r, c) => r * N + c;
+  const pickable = new Set(), targets = new Set();
+  if (myTurn) {
+    if (ph === 'rotate') ms.forEach(m => pickable.add(key(m[0], m[1])));
+    if (ph === 'place') ms.forEach(m => targets.add(key(m[3], m[4])));
+  }
+  const flippedSet = new Set((animate?.flipped || []).map(([r, c]) => key(r, c)));
+  const lp = last?.placed, lr = last?.rotated;
+
+  for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) {
+    const cell = document.createElement('div');
+    cell.className = 'cell';
+    let v = S ? S.board[r][c] : 0;
+    let ghost = false;
+    // 선택 미리보기
+    if (sel.r === r && sel.c === c && sel.nd !== undefined) v = Math.sign(v) * (sel.nd + 1);
+    if (sel.pr === r && sel.pc === c) { v = human * 1; ghost = true; }
+
+    if (v !== 0) {
+      const t = document.createElement('div');
+      const dir = Math.abs(v) - 1;
+      t.className = 'tile ' + (v > 0 ? 'g' : 'b');
+      if (ghost) t.classList.add('ghost');
+      if (pickable.has(key(r, c))) { t.classList.add('pickable'); t.onclick = () => { sel = { r, c }; render(); }; }
+      if (sel.r === r && sel.c === c) t.classList.add('selected');
+      if (!ghost && lp && lp[0] === r && lp[1] === c) t.classList.add('last-place');
+      if (!ghost && lr && lr[0] === r && lr[1] === c) t.classList.add('last-rotate');
+      if (flippedSet.has(key(r, c))) t.classList.add('flip');
+      if (animate?.placed && animate.placed[0] === r && animate.placed[1] === c) t.classList.add('pop');
+      t.innerHTML = ghost ? '' : arrowSVG(dir);
+      // 기존 타일을 다른 상대 타일로 바꿔 고르기
+      if (myTurn && ph !== 'rotate' && Math.sign(v) === -human && !(sel.r === r && sel.c === c) &&
+          S.moves.some(m => m.length && m[0] === r && m[1] === c)) {
+        t.classList.add('pickable'); t.onclick = () => { sel = { r, c }; render(); };
+      }
+      cell.appendChild(t);
+    } else if (targets.has(key(r, c))) {
+      cell.classList.add('target');
+      if (human === -1) cell.classList.add('mine-b');
+      cell.onclick = () => { if (busy) return; const move = ms.find(m => m[3] === r && m[4] === c); if (move) submit(move); };
+    }
+
+    // 방향 고르기
+    if (myTurn && ph === 'rotateDir' && sel.r === r && sel.c === c) {
+      cell.appendChild(picker([...new Set(ms.map(m => m[2]))], d => { sel.nd = d; render(); }));
+    }
+    board.appendChild(cell);
+  }
+  animate = null;
+  $('cancelBtn').disabled = !(myTurn && sel.r !== undefined);
+  renderStatus();
+}
+
+function picker(dirs, onPick) {
+  const p = document.createElement('div');
+  p.className = 'picker';
+  dirs.sort().forEach(d => {
+    const b = document.createElement('button');
+    b.className = 'd' + d;
+    b.textContent = ARROW[d];
+    b.title = ['북', '동', '남', '서'][d];
+    b.onclick = e => { e.stopPropagation(); onPick(d); };
+    p.appendChild(b);
+  });
+  return p;
+}
+
+function renderAdvantage() {
+  const available = Number.isFinite(tileEvaluation?.tiles);
+  const difference = available ? Math.round(tileEvaluation.tiles * 10) / 10 : 0;
+  // A display scale only: +/-5 tiles occupies 75%/25% of the bar.
+  const greenShare = .5 + Math.atan(difference / 5) / Math.PI;
+  $('advantageG').style.flexGrow = greenShare;
+  $('advantageB').style.flexGrow = 1 - greenShare;
+  $('leadG').textContent = difference > 0 ? `+${difference}` : '';
+  $('leadB').textContent = difference < 0 ? `+${-difference}` : '';
+  $('leadEven').hidden = difference !== 0;
+  $('leadEven').textContent = available ? '0' : tileEvaluation?.error ? '—' : '…';
+  const advantageText = !available ? (tileEvaluation?.error ? 'AI 평가를 불러오지 못했습니다' : 'AI 평가 중') : difference === 0 ? '대등' : `${difference > 0 ? '초록' : '갈색'} ${tileEvaluation.exact ? '' : '약 '}${Math.abs(difference)}타일 유리`;
+  $('advantage').setAttribute('aria-label', advantageText);
+  $('advantage').title = available ? `${advantageText} · ${tileEvaluation.exact ? '최종 결과' : `AI 가상 대국 ${tileEvaluation.samples}회의 평균 최종 차이`}` : advantageText;
+}
+
+function renderStatus(extra) {
+  if (!S) return;
+  renderAdvantage();
+  $('numG').textContent = S.green;
+  $('numB').textContent = S.brown;
+  $('nameG').textContent = '초록 · ' + (human === 1 ? '나' : 'AI');
+  $('nameB').textContent = '갈색 · ' + (human === -1 ? '나' : 'AI');
+  $('sideG').classList.toggle('turn', !S.ended && S.player === 1);
+  $('sideB').classList.toggle('turn', !S.ended && S.player === -1);
+
+  const st = $('status');
+  if (S.ended) {
+    const msg = S.winner === human ? '🎉 승리했습니다!' : S.winner === -human ? 'AI가 이겼습니다.' : '무승부입니다.';
+    st.innerHTML = `<b>${msg}</b>&nbsp;(초록 ${S.green} : 갈색 ${S.brown})`;
+    return;
+  }
+  if (busy) {
+    st.innerHTML = `<div class="spinner"></div> AI가 생각하는 중…`;
+    return;
+  }
+  if (S.player === human) {
+    if (S.moves.length === 1 && S.moves[0].length === 0) {
+      st.innerHTML = '둘 수 있는 수가 없습니다. ';
+      const b = document.createElement('button');
+      b.textContent = '패스';
+      b.onclick = () => submit([]);
+      st.appendChild(b);
+      return;
+    }
+    const tips = {
+      rotate: '① 돌릴 상대 타일을 고르세요.',
+      rotateDir: '② 돌릴 방향을 고르세요.',
+      place: '③ 빈 칸을 고르면 돌린 타일을 바라보도록 놓습니다.',
+    };
+    st.innerHTML = (extra ? extra + '<br>' : '') + tips[phase()];
+  }
+}
+
+let aiNote = '';
+
+async function submit(move) {
+  const id = gameId;
+  busy = true;
+  try {
+    const next = await api('/api/move', { board: S.board, player: S.player, move });
+    if (id !== gameId) return;
+    S = next; sel = {}; last = next.last; animate = next.last; aiNote = '';
+    evaluatePosition();
+    render();
+    await maybeAI();
+  } catch (e) {
+    if (id !== gameId) return;
+    alert(e.message); sel = {};
+  } finally {
+    if (id === gameId) { busy = false; render(); if (aiNote) renderStatus(aiNote); }
+  }
+}
+
+async function maybeAI() {
+  while (S && !S.ended && S.player !== human) {
+    const id = gameId;
+    busy = true; render();
+    const next = await api('/api/ai', { board: S.board, player: S.player });
+    if (id !== gameId) return;
+    S = next; last = next.last; animate = next.last;
+    evaluatePosition();
+    aiNote = next.aiMove.length ? '' : 'AI가 패스했습니다.';
+  }
+}
+
+async function newGame() {
+  const id = ++gameId;
+  resetWorker();
+  human = +$('side').value;
+  sel = {}; last = null; aiNote = ''; busy = true;
+  try {
+    const next = await api('/api/new');
+    if (id !== gameId) return;
+    S = next;
+    evaluatePosition();
+    render();
+    await maybeAI();
+  } catch (e) {
+    if (id !== gameId) return;
+    S = null;
+    $('status').textContent = '게임을 시작할 수 없습니다: ' + e.message;
+  } finally {
+    if (id === gameId) { busy = false; render(); if (aiNote) renderStatus(aiNote); }
+  }
+}
+
+$('newBtn').onclick = newGame;
+$('cancelBtn').onclick = () => { sel = {}; render(); };
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { sel = {}; render(); } });
+newGame();
+</script>
+</body>
+</html>

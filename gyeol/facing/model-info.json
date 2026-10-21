@@ -1,0 +1,9 @@
+{
+  "source": "best.pth.tar",
+  "rule": "facing",
+  "actionSize": 785,
+  "sha256": "42eabafdc67e61e2bf53bee2189c2279584f069a434ccd869077639163c8976d",
+  "exported": "2026-10-21T08:31:57.091193+00:00",
+  "maxInferenceError": 1.3709068298339844e-06,
+  "validationPositions": 194
+}
