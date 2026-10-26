@@ -1,7 +1,0 @@
-{
-  "source": "best.pth.tar",
-  "sha256": "ee44528329d74a88222fe474211e2cd6b2d70693aec23f96b3f5af62f2753b3c",
-  "exported": "2026-10-19T11:40:44.785811+00:00",
-  "maxInferenceError": 1.7881393432617188e-06,
-  "validationPositions": 197
-}
