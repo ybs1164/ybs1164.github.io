@@ -8,5 +8,15 @@
         "08:C3:FF:A3:04:11:49:A6:7E:A8:E2:E9:2C:3B:70:3C:35:37:49:99:9F:77:9A:6B:E9:02:1D:9F:E2:DA:A6:47"
       ]
     }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.rootin.android",
+      "sha256_cert_fingerprints": [
+        "CD:D4:8B:28:2E:EB:77:53:13:FB:18:B3:72:C6:19:18:B8:AF:F7:CD:CE:5D:E5:1A:B2:0D:1C:AD:DC:CD:3A:DF"
+      ]
+    }
   }
 ]
