@@ -1,0 +1,66 @@
+:root {
+  --tile-wood: #9c6b43;
+  --tile-wood-light: #ac764c;
+  --tile-edge: #4a2e1b;
+  --outline-dark: #5a3a24;
+  --outline-white: #f3f1ec;
+  --green: var(--outline-dark);
+  --brown: var(--outline-white);
+  --target: rgb(156 107 67 / 18%);
+}
+
+.tile {
+  background-color: var(--tile-wood);
+  background-image:
+    repeating-linear-gradient(3deg, transparent 0 2px, rgb(74 46 27 / 7%) 2px 3px, transparent 3px 5px),
+    linear-gradient(125deg, var(--tile-wood-light), var(--tile-wood));
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 20%), 0 3px 0 var(--tile-edge), 0 5px 9px rgb(0 0 0 / 18%);
+}
+.tile { border-radius: var(--tile-radius); }
+.tile.g { --arrow: var(--outline-dark); }
+.tile.b { --arrow: var(--outline-white); }
+.tile svg { display: block; width: 100%; height: 100%; }
+.tile svg g { transform-origin: 50px 50px; transition: transform .3s; }
+.tile-arrow { fill: none; stroke: var(--arrow, var(--outline-dark)); stroke-width: 3; stroke-linejoin: round; stroke-linecap: round; }
+.tile-hole { fill: var(--tile-edge); stroke: rgb(74 46 27 / 35%); stroke-width: 1.5; }
+
+.chip { border-radius: 50%; border: 1px solid rgb(90 58 36 / 22%); }
+.chip.g { background: var(--outline-dark); }
+.chip.b { background: var(--outline-white); }
+h1 { margin-bottom: 18px; }
+.side { min-width: 0; gap: 8px; }
+.side > span:not(.num) { font-size: 13px; white-space: nowrap; }
+.side .name { color: var(--ink); }
+.advantage-part.g { color: var(--outline-white); }
+.advantage-part.b { color: var(--outline-dark); }
+.cell {
+  --tile-inset: 3px;
+  --tile-radius: calc((var(--cell) - var(--tile-inset) * 2) * .1);
+}
+.tile.pickable::after, .tile.last-place::after, .tile.last-rotate::after {
+  box-sizing: border-box;
+  inset: -2px;
+  border-radius: calc(var(--tile-radius) + 2px);
+}
+.cell.target::before {
+  box-sizing: border-box;
+  inset: var(--tile-inset);
+  border-radius: var(--tile-radius);
+  border-color: var(--outline-dark);
+  background: var(--target);
+}
+.cell.target.mine-b::before { border-color: var(--tile-wood); background: var(--target); }
+.cell.target { --arrow: var(--outline-dark); }
+.cell.target.mine-b { --arrow: var(--outline-white); }
+.cell.target svg { position: absolute; inset: var(--tile-inset); width: calc(100% - var(--tile-inset) * 2); height: calc(100% - var(--tile-inset) * 2); pointer-events: none; opacity: .8; }
+.cell.target svg g { transform-origin: 50px 50px; }
+.cell.target .tile-hole { display: none; }
+.warn { color: var(--ink); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+@media (max-width: 600px) {
+  .cell { --tile-inset: 2px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tile, .tile svg g { transition: none; }
+  .tile.flip, .tile.pop { animation: none; }
+}

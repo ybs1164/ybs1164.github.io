@@ -1,0 +1,56 @@
+/* The same white paper, warm ink and fine rules as the illustrated rulebook. */
+:root, :root:not([data-theme="light"]) {
+  color-scheme: light;
+  --bg: #fff;
+  --panel: #f8f7f3;
+  --ink: #34332e;
+  --muted: #747168;
+  --line: #e3e0d8;
+  --accent: #9c6b43;
+}
+body { padding: 32px 20px 48px; line-height: 1.7; word-break: keep-all; -webkit-font-smoothing: antialiased; }
+main { max-width: 560px; }
+a { color: inherit; text-underline-offset: 4px; }
+.game-nav { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--line); font-size: 12px; color: var(--muted); }
+.game-nav a { min-height: 28px; display: inline-flex; align-items: center; text-decoration: none; }
+.game-nav a:hover { color: var(--ink); text-decoration: underline; }
+.game-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 28px; }
+.game-heading h1 { margin: 0; font-size: 27px; font-weight: 500; letter-spacing: .16em; line-height: 1.4; }
+.game-heading p { margin: 0; color: var(--muted); font-size: 12px; }
+.controls { gap: 8px; margin-bottom: 24px; }
+select, button { min-height: 40px; padding: 8px 12px; border-radius: 3px; font-size: 12px; background: #fff; transition: border-color .2s, background .2s; }
+button:not(:disabled):hover, select:hover { border-color: var(--accent); }
+button.primary { background: var(--ink); color: #fff; }
+button.primary:not(:disabled):hover { background: #514a3f; border-color: #514a3f; }
+.picker button { min-height: 0; }
+.score { gap: 24px; margin-bottom: 0; border-top: 1px solid var(--ink); }
+.side { position: relative; min-height: 70px; padding: 12px 4px; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: transparent; gap: 10px; }
+.side.turn { border-color: var(--accent); box-shadow: 0 2px 0 var(--accent); }
+.side.turn::before { content: ""; position: absolute; top: -3px; left: 4px; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+.side .num { font-size: 29px; font-weight: 500; line-height: 1.4; }
+.side .name, .side > span:not(.num) { font-size: 12px; }
+.chip { width: 15px; height: 15px; }
+.status { min-height: 72px; margin: 0; padding-block: 18px; color: var(--ink); font-size: 13px; line-height: 1.7; }
+.board-wrap { gap: 10px; }
+.board { background: var(--panel); border-radius: 4px; border-color: var(--line); }
+.advantage { width: 32px; border-radius: 3px; font-size: 10px; }
+.advantage-even { border-radius: 2px; }
+.game-help { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); }
+.game-help p { margin: 0 0 8px; }
+.game-help strong { font-weight: 500; color: var(--ink); }
+.game-help nav { display: flex; flex-wrap: wrap; gap: 20px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+@media (max-width: 600px) {
+  body { padding: 20px 10px 32px; }
+  .game-nav { margin-bottom: 24px; }
+  .game-heading { margin-bottom: 24px; }
+  .game-heading h1 { font-size: 24px; }
+  .score { gap: 16px; }
+  .side { gap: 8px; }
+  .side .name, .side > span:not(.num) { font-size: 11px; }
+  .board-wrap { gap: 8px; }
+  .advantage { width: 32px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  select, button, .side { transition: none; }
+}

@@ -1,15 +1,10 @@
 import {initial, decode} from '../play/engine.js';
 import {legal, apply, payload} from './rules.js';
+import {arrowSVG} from '../tile.js';
 const N = 7, ARROW = ['↑', '→', '↓', '←'];
 const $ = id => document.getElementById(id);
 let S, human = 1, busy = false, sel = {}, last = null, animate = null;
 const history = [];
-function arrowSVG(dir) {
-  return `<svg viewBox="0 0 100 100" aria-hidden="true"><g style="transform: rotate(${dir * 90}deg)">
-    <path d="M50 14 L80 46 L63 46 L63 86 L50 76 L37 86 L37 46 L20 46 Z" fill="var(--arrow)"
-      stroke="rgba(0,0,0,.35)" stroke-width="3" stroke-linejoin="round"/></g></svg>`;
-}
-
 function movesFiltered() {
   if (!S || S.ended || S.player !== human) return [];
   return S.moves.filter(m => m.length &&
@@ -115,10 +110,10 @@ function renderStatus() {
   $('sideB').classList.toggle('turn', !S.ended && S.player === -1);
   const st = $('status');
   if (S.ended) {
-    st.textContent = `${S.winner === 1 ? '초록 승리!' : S.winner === -1 ? '갈색 승리!' : '무승부!'} (초록 ${S.green} : 갈색 ${S.brown})`;
+    st.textContent = `${S.winner === 1 ? '갈색 승리!' : S.winner === -1 ? '흰색 승리!' : '무승부!'} (갈색 ${S.green} : 흰색 ${S.brown})`;
     return;
   }
-  const turn = S.player === 1 ? '초록' : '갈색';
+  const turn = S.player === 1 ? '갈색' : '흰색';
   if (!S.moves[0].length) {
     st.textContent = `${turn} 차례 · 둘 수 있는 수가 없습니다. `;
     const button = document.createElement('button');

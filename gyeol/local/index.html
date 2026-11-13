@@ -11,19 +11,12 @@
     --ink: #3b3a36;
     --muted: #8a857a;
     --line: #ddd5c6;
-    --green: #3f8f47;
-    --green-dark: #2f6f36;
-    --brown: #a8532f;
-    --brown-dark: #7f3d22;
-    --arrow: #ece4d3;
     --accent: #d9a441;
-    --target: rgba(63, 143, 71, .18);
     --cell: min(70px, calc((100vw - 102px) / 7));
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       --bg: #1e1d1b; --panel: #282724; --ink: #ebe6dc; --muted: #9c968a; --line: #3d3a35;
-      --target: rgba(120, 200, 128, .2);
     }
   }
   * { box-sizing: border-box; }
@@ -34,7 +27,6 @@
   }
   main { width: 100%; max-width: 560px; }
   h1 { font-size: 22px; letter-spacing: .5em; margin: 0 0 4px; font-weight: 700; }
-  .sub { color: var(--muted); font-size: 13px; margin-bottom: 18px; }
 
   .controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 14px; }
   select, button {
@@ -52,7 +44,6 @@
   }
   .side.turn { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent) inset; }
   .chip { width: 22px; height: 22px; border-radius: 5px; flex: none; }
-  .chip.g { background: var(--green); } .chip.b { background: var(--brown); }
   .side .name { font-size: 13px; color: var(--muted); }
   .side .num { font-size: 22px; font-weight: 700; margin-left: auto; font-variant-numeric: tabular-nums; }
 
@@ -100,7 +91,6 @@
     box-shadow: 0 2px 0 rgba(0,0,0,.18), 0 3px 8px rgba(0,0,0,.12);
     transition: transform .25s;
   }
-  .tile.g { background: var(--green); } .tile.b { background: var(--brown); }
   .tile svg { width: 100%; height: 100%; display: block; }
   .tile svg g { transition: transform .3s; transform-origin: 50px 50px; }
   .tile.pickable { cursor: pointer; }
@@ -133,28 +123,29 @@
   .picker .d0 { left: 28%; top: -22%; } .picker .d1 { right: -22%; top: 28%; }
   .picker .d2 { left: 28%; bottom: -22%; } .picker .d3 { left: -22%; top: 28%; }
 
-  .help { margin-top: 18px; font-size: 13px; color: var(--muted); line-height: 1.7; }
-  .help b { color: var(--ink); font-weight: 600; }
   .warn { color: var(--brown); font-size: 13px; }
 
 .cell.target svg { position:absolute; inset:20%; width:60%; height:60%; pointer-events:none; opacity:.65; }
 .cell.target svg g { transform-origin:50% 50%; }
 :focus-visible { outline:3px solid var(--accent); outline-offset:3px; }
 </style>
+<link rel="stylesheet" href="../tile.css">
+<link rel="stylesheet" href="../game.css">
 </head>
 <body><main>
-<a href="../" style="color:var(--muted)">← 결 소개</a>
-<h1>결 GYEOL</h1>
-<p class="sub">한 기기에서 번갈아 플레이</p>
+<nav class="game-nav" aria-label="페이지 메뉴"><a href="../">← 결 소개</a><a href="../#rules">게임 방법 ↗</a></nav>
+<header class="game-heading"><h1>결 GYEOL</h1><p>번갈아 플레이 · 2인</p></header>
 <div class="controls"><button id="newBtn" class="primary">새 게임</button><button id="undoBtn">한 수 되돌리기</button><button id="cancelBtn">선택 취소</button></div>
 <div class="score">
-<div class="side" id="sideG"><div class="chip g"></div><span>초록 · 선공</span><span class="num" id="numG"></span></div>
-<div class="side" id="sideB"><div class="chip b"></div><span>갈색 · 후공</span><span class="num" id="numB"></span></div>
+<div class="side" id="sideG"><div class="chip g" aria-hidden="true"></div><span>갈색 · 선공</span><span class="num" id="numG"></span></div>
+<div class="side" id="sideB"><div class="chip b" aria-hidden="true"></div><span>흰색 · 후공</span><span class="num" id="numB"></span></div>
 </div>
 <div class="status" id="status" role="status" aria-live="polite"></div>
 <div class="board-wrap"><div class="board" id="board" aria-label="결 게임판"></div></div>
-<p class="help">한 기기에서 초록과 갈색을 번갈아 조작합니다. 상대 타일을 돌린 뒤, 인접한 빈칸에 내 타일을 놓으세요. <b>놓는 타일의 화살표는 방금 돌린 상대 타일을 반드시 향합니다.</b> 빈칸의 화살표로 놓일 방향을 미리 볼 수 있습니다. 타일은 5×5 범위 안에 놓으며, 화살표 경로를 따라 상대 타일을 뒤집습니다. 25개를 모두 놓거나 양쪽 모두 둘 수 없으면 타일이 많은 쪽이 승리합니다.</p>
-<a href="../play/" style="color:var(--muted);font-size:13px">AI와 플레이하기 →</a>
+<footer class="game-help">
+  <p><strong>돌리고 → 놓고 → 뒤집기.</strong> 갈색과 흰색이 한 기기에서 번갈아 둡니다.</p>
+  <nav aria-label="플레이 안내"><a href="../#rules">게임 방법</a><a href="../play/">AI와 플레이 ↗</a></nav>
+</footer>
 </main>
 <script type="module" src="./game.js"></script>
 </body>

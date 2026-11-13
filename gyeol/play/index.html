@@ -11,19 +11,12 @@
     --ink: #3b3a36;
     --muted: #8a857a;
     --line: #ddd5c6;
-    --green: #3f8f47;
-    --green-dark: #2f6f36;
-    --brown: #a8532f;
-    --brown-dark: #7f3d22;
-    --arrow: #ece4d3;
     --accent: #d9a441;
-    --target: rgba(63, 143, 71, .18);
     --cell: min(70px, calc((100vw - 102px) / 7));
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       --bg: #1e1d1b; --panel: #282724; --ink: #ebe6dc; --muted: #9c968a; --line: #3d3a35;
-      --target: rgba(120, 200, 128, .2);
     }
   }
   * { box-sizing: border-box; }
@@ -34,7 +27,6 @@
   }
   main { width: 100%; max-width: 560px; }
   h1 { font-size: 22px; letter-spacing: .5em; margin: 0 0 4px; font-weight: 700; }
-  .sub { color: var(--muted); font-size: 13px; margin-bottom: 18px; }
 
   .controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 14px; }
   select, button {
@@ -52,7 +44,6 @@
   }
   .side.turn { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent) inset; }
   .chip { width: 22px; height: 22px; border-radius: 5px; flex: none; }
-  .chip.g { background: var(--green); } .chip.b { background: var(--brown); }
   .side .name { font-size: 13px; color: var(--muted); }
   .side .num { font-size: 22px; font-weight: 700; margin-left: auto; font-variant-numeric: tabular-nums; }
 
@@ -100,7 +91,6 @@
     box-shadow: 0 2px 0 rgba(0,0,0,.18), 0 3px 8px rgba(0,0,0,.12);
     transition: transform .25s;
   }
-  .tile.g { background: var(--green); } .tile.b { background: var(--brown); }
   .tile svg { width: 100%; height: 100%; display: block; }
   .tile svg g { transition: transform .3s; transform-origin: 50px 50px; }
   .tile.pickable { cursor: pointer; }
@@ -133,29 +123,28 @@
   .picker .d0 { left: 28%; top: -22%; } .picker .d1 { right: -22%; top: 28%; }
   .picker .d2 { left: 28%; bottom: -22%; } .picker .d3 { left: -22%; top: 28%; }
 
-  .help { margin-top: 18px; font-size: 13px; color: var(--muted); line-height: 1.7; }
-  .help b { color: var(--ink); font-weight: 600; }
   .warn { color: var(--brown); font-size: 13px; }
 </style>
+<link rel="stylesheet" href="../tile.css">
+<link rel="stylesheet" href="../game.css">
 </head>
 <body>
 <main>
-  <a href="../" style="color:var(--muted);font-size:13px;display:inline-block;margin-bottom:12px">← 결 소개</a>
-  <h1>결 GYEOL</h1>
-  <p class="sub">AI 대국 · 새 타일은 방금 돌린 상대 타일을 바라봅니다.</p>
+  <nav class="game-nav" aria-label="페이지 메뉴"><a href="../">← 결 소개</a><a href="../#rules">게임 방법 ↗</a></nav>
+  <header class="game-heading"><h1>결 GYEOL</h1><p>AI와 플레이</p></header>
 
   <div class="controls">
-    <select id="side" aria-label="내 색">
-      <option value="1">나: 초록 (선공)</option>
-      <option value="-1">나: 갈색 (후공)</option>
+    <select id="side" aria-label="내 화살표 색">
+      <option value="1">나: 갈색 화살표 (선공)</option>
+      <option value="-1">나: 흰색 화살표 (후공)</option>
     </select>
     <button class="primary" id="newBtn">새 게임</button>
     <button id="cancelBtn" disabled>선택 취소</button>
   </div>
 
   <div class="score">
-    <div class="side" id="sideG"><div class="chip g"></div><div><div class="name" id="nameG">초록</div></div><div class="num" id="numG">1</div></div>
-    <div class="side" id="sideB"><div class="chip b"></div><div><div class="name" id="nameB">갈색</div></div><div class="num" id="numB">1</div></div>
+    <div class="side" id="sideG"><div class="chip g" aria-hidden="true"></div><div><div class="name" id="nameG">갈색</div></div><div class="num" id="numG">1</div></div>
+    <div class="side" id="sideB"><div class="chip b" aria-hidden="true"></div><div><div class="name" id="nameB">흰색</div></div><div class="num" id="numB">1</div></div>
   </div>
 
   <div class="status" id="status" role="status" aria-live="polite"></div>
@@ -169,11 +158,14 @@
     <div class="board" id="board" aria-label="결 게임판"></div>
   </div>
 
-  <p class="help">상대 타일과 돌릴 방향을 고른 뒤 인접한 빈칸을 누르세요. <b>새 타일은 방금 돌린 상대 타일을 바라보도록 놓입니다.</b> 25개를 모두 놓거나 양쪽 모두 둘 수 없으면 타일이 많은 쪽이 승리합니다.</p>
-  <a href="../local/" style="color:var(--muted);font-size:13px">번갈아 플레이하기 →</a>
+  <footer class="game-help">
+    <p><strong>돌리고 → 놓고 → 뒤집기.</strong> 상대 타일을 고르면 시작합니다.</p>
+    <nav aria-label="플레이 안내"><a href="../#rules">게임 방법</a><a href="../local/">번갈아 플레이 ↗</a></nav>
+  </footer>
 </main>
 
-<script>
+<script type="module">
+import {arrowSVG} from '../tile.js';
 const N = 7;
 const ARROW = ['↑', '→', '↓', '←'];
 const $ = id => document.getElementById(id);
@@ -204,11 +196,6 @@ function evaluatePosition() {
   sendEvaluation();
 }
 
-function arrowSVG(dir) {
-  return `<svg viewBox="0 0 100 100" aria-hidden="true"><g style="transform: rotate(${dir * 90}deg)">
-    <path d="M50 14 L80 46 L63 46 L63 86 L50 76 L37 86 L37 46 L20 46 Z" fill="var(--arrow)"
-      stroke="rgba(0,0,0,.35)" stroke-width="3" stroke-linejoin="round"/></g></svg>`;
-}
 
 let worker, requestId = 0;
 const pending = new Map();
@@ -348,7 +335,7 @@ function renderAdvantage() {
   $('leadB').textContent = difference < 0 ? `+${-difference}` : '';
   $('leadEven').hidden = difference !== 0;
   $('leadEven').textContent = available ? '0' : tileEvaluation?.error ? '—' : '…';
-  const advantageText = !available ? (tileEvaluation?.error ? 'AI 평가를 불러오지 못했습니다' : 'AI 평가 중') : difference === 0 ? '대등' : `${difference > 0 ? '초록' : '갈색'} ${tileEvaluation.exact ? '' : '약 '}${Math.abs(difference)}타일 유리`;
+  const advantageText = !available ? (tileEvaluation?.error ? 'AI 평가를 불러오지 못했습니다' : 'AI 평가 중') : difference === 0 ? '대등' : `${difference > 0 ? '갈색' : '흰색'} ${tileEvaluation.exact ? '' : '약 '}${Math.abs(difference)}타일 유리`;
   $('advantage').setAttribute('aria-label', advantageText);
   $('advantage').title = available ? `${advantageText} · ${tileEvaluation.exact ? '최종 결과' : `AI 가상 대국 ${tileEvaluation.samples}회의 평균 최종 차이`}` : advantageText;
 }
@@ -358,15 +345,15 @@ function renderStatus(extra) {
   renderAdvantage();
   $('numG').textContent = S.green;
   $('numB').textContent = S.brown;
-  $('nameG').textContent = '초록 · ' + (human === 1 ? '나' : 'AI');
-  $('nameB').textContent = '갈색 · ' + (human === -1 ? '나' : 'AI');
+  $('nameG').textContent = '갈색 · ' + (human === 1 ? '나' : 'AI');
+  $('nameB').textContent = '흰색 · ' + (human === -1 ? '나' : 'AI');
   $('sideG').classList.toggle('turn', !S.ended && S.player === 1);
   $('sideB').classList.toggle('turn', !S.ended && S.player === -1);
 
   const st = $('status');
   if (S.ended) {
     const msg = S.winner === human ? '🎉 승리했습니다!' : S.winner === -human ? 'AI가 이겼습니다.' : '무승부입니다.';
-    st.innerHTML = `<b>${msg}</b>&nbsp;(초록 ${S.green} : 갈색 ${S.brown})`;
+    st.innerHTML = `<b>${msg}</b>&nbsp;(갈색 ${S.green} : 흰색 ${S.brown})`;
     return;
   }
   if (busy) {
