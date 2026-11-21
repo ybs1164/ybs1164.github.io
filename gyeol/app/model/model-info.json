@@ -1,0 +1,15 @@
+{
+  "source": "candidate.pth.tar",
+  "rule": "facing",
+  "actionSize": 785,
+  "sha256": "5bcbf837499f7eb96c02d4125e00e8a0351c9a028def20ad1525b911f7d901b3",
+  "onnxSha256": "26e68559dd6a16319ad7429511cbff962fee456bbcc99d56af98c17f288d14aa",
+  "outputs": {
+    "log_policy": "log probabilities over 785 actions",
+    "value": "side to move, -1..1",
+    "margin": "final tile margin, side to move, tiles"
+  },
+  "exported": "2026-11-21T02:46:30.314983+00:00",
+  "maxInferenceError": 6.67572021484375e-06,
+  "validationPositions": 194
+}
