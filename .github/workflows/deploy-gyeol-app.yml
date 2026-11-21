@@ -1,0 +1,94 @@
+name: Deploy GYEOL web app
+
+# github.com/ybs1164/gyeol 의 웹 앱을 빌드해 /gyeol/app/ 에 올린다.
+# 정적 파일만 여기 있고, 온라인 대국(WebSocket)과 퍼즐 API는 Oracle 게임 서버를 쓴다.
+# 매시간 gyeol 저장소의 main 이 바뀌었는지만 보고, 바뀌었을 때만 빌드·커밋한다.
+on:
+  schedule:
+    - cron: "23 * * * *"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Rebuild even if the source commit is unchanged"
+        type: boolean
+        default: false
+  push:
+    branches: [main]
+    paths: [".github/workflows/deploy-gyeol-app.yml"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy-gyeol-app
+  cancel-in-progress: false
+
+env:
+  APP_DIR: gyeol/app
+  GAME_SERVER: https://gyeol.146.56.189.166.sslip.io
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout site
+        uses: actions/checkout@v4
+
+      - name: Check source commit
+        id: source
+        run: |
+          sha=$(git ls-remote https://github.com/ybs1164/gyeol.git refs/heads/main | cut -f1)
+          deployed=$(cat "$APP_DIR/.source-commit" 2>/dev/null || true)
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          if [[ "$sha" == "$deployed" && "${{ github.event_name }}" == "schedule" ]] || [[ "$sha" == "$deployed" && "${{ inputs.force }}" != "true" && "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "build=false" >> "$GITHUB_OUTPUT"; echo "Already deployed $sha"
+          else
+            echo "build=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Checkout GYEOL
+        if: steps.source.outputs.build == 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: ybs1164/gyeol
+          ref: ${{ steps.source.outputs.sha }}
+          path: _gyeol
+
+      - name: Setup Node.js
+        if: steps.source.outputs.build == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: _gyeol/gyeol-app/package-lock.json
+
+      - name: Build web app
+        if: steps.source.outputs.build == 'true'
+        working-directory: _gyeol/gyeol-app
+        env:
+          BASE: /gyeol/app/
+          VITE_SERVER: ${{ env.GAME_SERVER }}
+        run: |
+          npm ci
+          npx tsc -p apps/web --noEmit
+          npm run build -w @gyeol/web
+
+      - name: Commit build
+        if: steps.source.outputs.build == 'true'
+        run: |
+          rm -rf "$APP_DIR"
+          mkdir -p "$APP_DIR"
+          cp -r _gyeol/gyeol-app/apps/web/dist/. "$APP_DIR/"
+          echo "${{ steps.source.outputs.sha }}" > "$APP_DIR/.source-commit"
+          rm -rf _gyeol
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A "$APP_DIR"
+          if git diff --cached --quiet; then echo "No changes"; exit 0; fi
+          git commit -m "Deploy GYEOL web app (gyeol@${{ steps.source.outputs.sha }})"
+          # 블로그 동기화가 자주 커밋하므로 밀리면 다시 받아 올린다
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin main && git push origin HEAD:main && exit 0
+            sleep $((i * 5))
+          done
+          exit 1
